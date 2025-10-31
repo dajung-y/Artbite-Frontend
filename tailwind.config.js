@@ -7,8 +7,17 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        primary: '#008CFF',
-        primaryDark: '#003159',
+        white: {
+          DEFAULT: "#FFFFFF",
+          100: "#FFFFFF",
+        },
+        black: {
+          DEFAULT: "#000000",
+          100: "#000000",
+        },
+        'primary': '#006BFF',
+        'kakao-yellow': '#FADF4B',
+        'naver-green': '#5AC451'
       },
       // 폰트 추가
     },
