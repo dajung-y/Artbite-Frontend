@@ -1,12 +1,17 @@
 import { useState } from "react";
 import Button from "../../../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { loginSchema } from "../../../schemas/loginSchema";
+import axiosInstance from "../../../api/axiosInstance";
+import { setAccessTokenToState } from "../../../stores/authStore";
+import axios from "axios";
 
 export default function LoginPage() {
 
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   // 로그인 함수들
   const handleKakaoLogin = () => {
@@ -21,12 +26,31 @@ export default function LoginPage() {
     console.log("구글로 로그인");
   }
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmail("");
-    setPassword("");
-    console.log(`로그인 시도 : ${email}, ${password}`);
-    navigate('/', {replace: true})
+    setError("");
+    // 입력값 검사
+    const result = loginSchema.safeParse({ email, password });
+
+    if(!result.success){
+      const firstError = result.error.issues[0];
+      setError(firstError.message);
+      return;
+    }
+
+    try{
+      const response = await axiosInstance.post("/api/auth/login", {email, password});
+      const { accessToken } =response.data.data;
+      setAccessTokenToState(accessToken);
+
+      navigate("/", {replace: true});
+    } catch(err: unknown) {
+      if(axios.isAxiosError(err) && err.response){
+        setError(err.response.data?.error?.message || "이메일 또는 비밀번호가 일치하지 않습니다");
+      } else {
+        setError("로그인 중 알 수 없는 오류가 발생했습니다");
+      }
+    }
   }
 
   return (
@@ -87,6 +111,12 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-6 py-3.5 rounded-md bg-[#2F2F2F] placeholder-white text-white font-semibold focus:outline focus:outline-white" />
               
+            {/* 에러 메시지 */}
+            {error && (
+              <div className="flex justify-center py-1">
+                <p className="text-sm text-red-500">{error}</p>
+              </div>
+            )}
             <Button
               size="large"
               fullWidth
