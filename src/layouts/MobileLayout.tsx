@@ -7,7 +7,7 @@ import Header from "./Header";
 interface MobileLayoutProps {
   children: React.ReactNode;
 }
-  
+ 
 
 const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
   return ( 

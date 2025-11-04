@@ -1,44 +1,39 @@
-// src/stores/authStore.ts
-
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface AuthState {
-  accessToken: string | null;
-  setAccessToken: (token: string) => void;
-  isLoggedIn: boolean;
-  clearToken: () => void;
+    accessToken: string | null;
+    setAccessToken: (token: string | null) => void;
+    clearAuth: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+const ACCESS_TOKEN_KEY = 'accessToken';
 
-  accessToken: localStorage.getItem('accessToken') || null,
-  // 토큰 저장
-  setAccessToken: (token) => {
-    set({ accessToken: token });
-    localStorage.setItem('accessToken', token);
-  },
-  isLoggedIn: false,
-  // 로그아웃
-  clearToken: () => {
-    set({ accessToken: null });
-    localStorage.removeItem('accessToken')
-  },
+const useAuthStore = create<AuthState>((set) => ({
+    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY),
+    setAccessToken: (token) => {
+        set({ accessToken: token });
+        if (token) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, token);
+        } else {
+            localStorage.removeItem(ACCESS_TOKEN_KEY);
+        }
+    },
+    clearAuth: () => {
+        set({ accessToken: null });
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+    },
 }));
 
-// zustand에 저장된 accessToken 읽어오는 함수
-const getAccessTokenFromState = (): string | null => {
-  return useAuthStore.getState().accessToken;
+export const getAccessTokenFromState = (): string | null => {
+    return useAuthStore.getState().accessToken;
 };
 
-// accessToken을 zustand에 저장하는 함수
-const setAccessTokenToState = (token: string) => {
-  return useAuthStore.getState().setAccessToken(token);
+export const setAccessTokenToState = (token: string) => {
+    useAuthStore.getState().setAccessToken(token);
 };
 
-// 로그아웃 or 토큰만료
-const clearTokenState = () => {
-  useAuthStore.getState().clearToken();
+export const clearTokenState = () => {
+    useAuthStore.getState().clearAuth();
 };
 
-export {getAccessTokenFromState, setAccessTokenToState, clearTokenState};
-
+export default useAuthStore;

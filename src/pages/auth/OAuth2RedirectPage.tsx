@@ -2,9 +2,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import { setAccessTokenToState } from "../../stores/authStore";
 
-
 export default function OAuth2RedirectPage() {
-
   const navigate = useNavigate();
   const hasProcessedToken = useRef(false);
 
@@ -19,6 +17,7 @@ export default function OAuth2RedirectPage() {
     if(accessToken) {
       hasProcessedToken.current = true;
 
+      // URL에서 토큰 정보 제거
       window.history.replaceState({}, document.title, window.location.pathname);
 
       // access token 저장
