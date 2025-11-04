@@ -5,6 +5,7 @@ import MobileLayout from "./layouts/MobileLayout"
 import type { JSX } from "react"
 import LoginPage from "./pages/auth/login/LoginPage"
 import SignupPage from "./pages/auth/signup/SignupPage"
+import OAuth2RedirectPage from "./pages/auth/OAuth2RedirectPage"
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
         {/* 서브 페이지들 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectPage />} />
+        
       </Route >
     </Routes>
   )

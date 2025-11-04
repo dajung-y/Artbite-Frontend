@@ -7,7 +7,7 @@ interface HeaderProps {
   className?: string;
 }
  
-const Header: React.FC<HeaderProps> = (className) => {
+const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate();
 
   // 임시
@@ -23,15 +23,15 @@ const Header: React.FC<HeaderProps> = (className) => {
   return (
     <header 
       className={clsx(
-        "w-full px-4 pt-10 pb-4 inline-flex justify-between items-end",
-        className)}  
+        "fixd top-0 left-0 w-full z-30 px-4 pt-10 pb-4 inline-flex justify-between items-end bg-primary"
+      )}  
     >
       {/* 왼쪽 - 홈 아이콘 */}
       <div className="text-white text-base font-medium"
            onClick={handleLogo}>
         Home Icon
       </div>
-      {/* 오른쪽 - 햄버거 아이콘 */}
+      {/* 오른쪽 - 메뉴 버튼 */}
       <div className="w-6 h-6">
         <FiMenu className="w-full h-full text-white"
                 onClick={handleSideBar} />
