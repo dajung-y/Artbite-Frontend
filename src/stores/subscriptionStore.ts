@@ -2,20 +2,22 @@
 // 임시 구독 상태 저장소
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface SubscriptionState {
   isSubscribed: boolean;
-  subscribe: () => void;
-  unsubscribe: () => void;
+  toggleSubscription: () => void;
 }
 
-export const useSubscriptionStore = create<SubscriptionState> ((set) => ({
-  isSubscribed: false,     // 기본값 : 비구독
-  subscribe: () => {
-    console.log('구독상태 : true');
-    set({ isSubscribed: true });
-  },
-  unsubscribe: () => {
-    console.log('구독상태 : false');
-    set({ isSubscribed: false })},
-}))
+export const useSubscriptionStore = create<SubscriptionState>() (
+  persist(
+    (set) => ({
+      isSubscribed: false,        // 기본 값 : 구독 X
+      toggleSubscription: () => 
+        set((state) => ({ isSubscribed: !state.isSubscribed }))
+    }),
+    {
+      name: 'subscription-state'
+    }
+  )
+)

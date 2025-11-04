@@ -5,7 +5,7 @@ import Toast from "../common/Toast";
 
 export default function Unsubscribed() {
   
-  const { subscribe } = useSubscriptionStore();
+  const { toggleSubscription } = useSubscriptionStore();
 
   // 구독 상태 변경
   const handleSubscribe = () => {
@@ -18,7 +18,7 @@ export default function Unsubscribed() {
 
     // 3초 뒤 상태변경
     setTimeout(() => {
-      subscribe();
+      toggleSubscription()
     }, 3000);
   }
   return (

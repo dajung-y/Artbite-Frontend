@@ -5,7 +5,7 @@ import Toast from "../common/Toast";
 
 export default function Subscribed() {
   const day = 14;   // 구독유지날짜 상수값
-  const { unsubscribe } = useSubscriptionStore();
+  const { toggleSubscription } = useSubscriptionStore();
 
   // 구독 해지
   const handleUnsubscribe = () => {
@@ -15,7 +15,7 @@ export default function Subscribed() {
     )
 
     setTimeout(() => {
-      unsubscribe();
+      toggleSubscription()
     }, 3000);
   }
   return (
