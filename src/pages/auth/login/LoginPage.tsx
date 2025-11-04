@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../../schemas/loginSchema";
@@ -6,13 +6,21 @@ import axiosInstance from "../../../api/axiosInstance";
 import { setAccessTokenToState } from "../../../stores/authStore";
 import axios from "axios";
 import SocialLoginButtons from "./SocialLoginButtons";
+import useAuthStore from "../../../stores/authStore";
 
 export default function LoginPage() {
 
   const navigate = useNavigate();
+  const { accessToken } = useAuthStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate('/', { replace: true });
+    }
+  }, [accessToken, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +41,14 @@ export default function LoginPage() {
 
       navigate("/", {replace: true});
     } catch(err: unknown) {
+      console.error("Login error:", err); // Log the entire error object
       if(axios.isAxiosError(err) && err.response){
-        setError(err.response.data?.error?.message || "이메일 또는 비밀번호가 일치하지 않습니다");
+        console.log("Login error response data:", err.response.data);
+        if (err.response.status === 401) {
+          setError("이메일 또는 비밀번호가 일치하지 않습니다");
+        } else {
+          setError(err.response.data?.error?.message || "이메일 또는 비밀번호가 일치하지 않습니다");
+        }
       } else {
         setError("로그인 중 알 수 없는 오류가 발생했습니다");
       }
@@ -74,7 +88,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-6 py-3.5 rounded-md bg-[#2F2F2F] placeholder-white text-white font-semibold focus:outline focus:outline-white" />
-              
+
             {/* 에러 메시지 */}
             {error && (
               <div className="flex justify-center py-1">
@@ -90,7 +104,6 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* 하단 링크 버튼 */}
         {/* 하단 링크 버튼 */}
         <div className="flex justify-center items-center gap-4">
           <Link

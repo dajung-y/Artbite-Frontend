@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 interface HeaderProps {
   className?: string;
 }
- 
+
 const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate();
 
   // 임시
   const handleLogo = () => {
     navigate('/');
-    console.log("메인페이지로 이동");
   }
 
   const handleSideBar = () => {
@@ -24,7 +23,7 @@ const Header: React.FC<HeaderProps> = () => {
     <header 
       className={clsx(
         "fixd top-0 left-0 w-full z-30 px-4 pt-10 pb-4 inline-flex justify-between items-end bg-primary"
-      )}  
+      )}
     >
       {/* 왼쪽 - 홈 아이콘 */}
       <div className="text-white text-base font-medium"

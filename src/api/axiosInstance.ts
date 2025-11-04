@@ -4,7 +4,6 @@ import axios from "axios";
 import { clearTokenState, getAccessTokenFromState, setAccessTokenToState} from "../stores/authStore";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000",   // 백엔드 주소
   withCredentials: true               // refrash token 쿠키 자동 전송
 });
 
@@ -22,7 +21,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// 응답 인터셉터 
+// 응답 인터셉터
 
 // 토큰 재발급 요청 진행중 확인
 let isRefreshing = false;
@@ -51,10 +50,15 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const originalRequest = error.config as any;
+    const originalRequest = error.config;
 
     // 401 오류, 재시도 요청 아닐 때
     if(error.response.status === 401 && originalRequest && !originalRequest._retry) {
+      // 로그인 또는 회원가입 요청에 대한 401은 토큰 재발급을 시도하지 않고 바로 에러를 반환
+      if (originalRequest.url === '/api/auth/login' || originalRequest.url === '/api/auth/signup') {
+        return Promise.reject(error);
+      }
+
       // 토큰 재발급 진행중인 경우
       if(isRefreshing){
         return new Promise((resolve, reject) => {
@@ -79,7 +83,7 @@ axiosInstance.interceptors.response.use(
         setAccessTokenToState(newAccessToken);
 
         // 원래 요청의 헤더를 새 토큰으로 교체
-        if(originalRequest.headers){
+        if(originalRequest.headers) {
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         }
 
@@ -88,6 +92,7 @@ axiosInstance.interceptors.response.use(
 
         // 실패했던 요청 재실행
         return axiosInstance(originalRequest);
+
       } catch (reissueError: unknown) {
         // refresh token 도 만료된 경우
         processQueue(reissueError, null);
