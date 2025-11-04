@@ -13,7 +13,7 @@ export default function MainPage() {
   
   const handleNote = () => {
     console.log("상세페이지로 이동");
-    navigate('/detail');
+    navigate('/today');
   };
 
   return (
