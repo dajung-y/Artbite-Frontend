@@ -5,6 +5,7 @@ import { loginSchema } from "../../../schemas/loginSchema";
 import axiosInstance from "../../../api/axiosInstance";
 import { setAccessTokenToState } from "../../../stores/authStore";
 import axios from "axios";
+import SocialLoginButtons from "./SocialLoginButtons";
 
 export default function LoginPage() {
 
@@ -12,19 +13,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-
-  // 로그인 함수들
-  const handleKakaoLogin = () => {
-    console.log("카카오로 로그인");
-  }
-
-  const handleNaverLogin = () => {
-    console.log("네이버로 로그인");
-  }
-
-  const handleGoogleLogin = () => {
-    console.log("구글로 로그인");
-  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,31 +53,7 @@ export default function LoginPage() {
       <div className="w-full px-8 space-y-8">
 
         {/* SNS 로그인 */}
-        <div className="space-y-1.5 py-6">
-          <Button
-            size="large"
-            fullWidth
-            bgColor="bg-kakao-yellow"
-            onClick={handleKakaoLogin}
-            >
-            카카오로 시작하기
-          </Button>
-          <Button
-            size="large"
-            fullWidth
-            bgColor="bg-naver-green"
-            onClick={handleNaverLogin}
-            >
-            네이버로 시작하기
-          </Button>
-          <Button
-            size="large"
-            fullWidth
-            onClick={handleGoogleLogin}
-            >
-            구글로 시작하기
-          </Button>
-        </div>
+        <SocialLoginButtons />
 
         {/* 구분선 */}
         <div className="border-t border-white" />
@@ -127,16 +91,26 @@ export default function LoginPage() {
         </div>
 
         {/* 하단 링크 버튼 */}
-        <div className="flex justify-center gap-4">
-          {/* 임시로 모두 회원가입페이지로 이동 */}
-          <Link to='/signup' className="text-white text-base font-semibold">
+        {/* 하단 링크 버튼 */}
+        <div className="flex justify-center items-center gap-4">
+          <Link
+            to="/signup"
+            className="text-gray-300 text-sm font-normal font-['Pretendard'] leading-5"
+          >
             회원가입
           </Link>
-          <Link to='/signup' className="text-white text-base font-semibold">
+
+          {/* 구분선 */}
+          <div className="w-0 h-3.5 outline outline-1 outline-offset-[-0.5px] outline-neutral-700" />
+
+          <Link
+            to="/signup"
+            className="text-gray-300 text-sm font-normal font-['Pretendard'] leading-5"
+          >
             아이디 찾기
           </Link>
-
         </div>
+
       </div>
     </div>
   )

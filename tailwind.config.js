@@ -12,12 +12,14 @@ module.exports = {
           100: "#FFFFFF",
         },
         black: {
-          DEFAULT: "#000000",
+          DEFAULT: "#141414",
           100: "#000000",
         },
-        'primary': '#006BFF',
+        'primary': '#D1D6DB',
         'kakao-yellow': '#FADF4B',
-        'naver-green': '#5AC451'
+        'naver-green': '#5AC451',
+        'google-black': '#131314',
+        'google-border' : '#3A3A3A'
       },
       // 폰트 추가
     },
