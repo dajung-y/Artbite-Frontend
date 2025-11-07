@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type React from "react";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "custom";
   size?: "medium" | "large";
   fullWidth?: boolean;
   bgColor?: string;
@@ -11,11 +12,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 };
 
 export default function Button({
+  variant = "primary",
   size = "medium",
   fullWidth = false,
-  bgColor = "bg-primary",
-  textColor = "text-black",
-  borderColor = "border-primary",
+  bgColor,
+  textColor,
+  borderColor,
   icon,
   className,
   children,
@@ -26,14 +28,26 @@ export default function Button({
   const widthStyle = fullWidth ? "w-full block" : "";
   const iconStyle = icon ? "flex-row gap-2" : "";
 
+  const variantStyle = 
+    variant === "primary"
+     ? "bg-primary text-black border-primary"
+     : variant === "secondary"
+     ? "bg-secondary text-white border-secondary"
+     : "";
+    
+  const customStyle = clsx(
+    bgColor,
+    textColor,
+    borderColor
+  );
+
   const buttonClass = clsx(
     baseStyle, 
     sizeStyle, 
     widthStyle, 
     iconStyle, 
-    bgColor, 
-    textColor, 
-    borderColor,
+    variantStyle,
+    customStyle,
     className);
 
   return (

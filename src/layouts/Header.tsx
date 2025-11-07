@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <header 
       className={clsx(
-        "sticky top-0 left-0 w-full z-30 px-4 pt-10 pb-4 inline-flex justify-between items-end bg-primary"
+        "sticky top-0 left-0 w-full z-30 px-4 pt-10 pb-4 inline-flex justify-between items-end bg-gradient-to-b from-black-100/100 to-transparent"
       )}
     >
       {/* 왼쪽 : 홈 아이콘 */}
