@@ -5,8 +5,8 @@ import { loginSchema } from "../../../schemas/loginSchema";
 import axiosInstance from "../../../api/axiosInstance";
 import { setAccessTokenToState } from "../../../stores/authStore";
 import axios from "axios";
-import SocialLoginButtons from "./SocialLoginButtons";
 import useAuthStore from "../../../stores/authStore";
+import SocialLoginButtons from "../../../components/auth/SocialLoginButtons";
 
 export default function LoginPage() {
 
@@ -56,24 +56,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full h-full bg-black flex flex-col items-center justify-center p-4 text-white">
+    <div className="w-full h-full bg-black flex flex-col items-center justify-center text-white">
       {/* 로고영역 */}
-      <div className="p-8 border border-white">
+      <div className="p-8">
         {/* 임시 텍스트 (이미지로 대체) */}
-        <h1 className="text-xl font-bold">(서비스 로고)</h1>
+        <h1 className="text-xl font-bold">메인 텍스트</h1>
       </div>
 
       {/* 로그인 컨테이너 */}
-      <div className="w-full px-8 space-y-8">
+      <div className="w-full px-5 space-y-16">
 
         {/* SNS 로그인 */}
         <SocialLoginButtons />
 
-        {/* 구분선 */}
-        <div className="border-t border-white" />
-
         {/* 이메일 로그인 */}
-        <div className="pt-6">
+        <div>
           <form onSubmit={handleLogin} className="space-y-1.5">
             <input
               type="text"
@@ -96,6 +93,7 @@ export default function LoginPage() {
               </div>
             )}
             <Button
+              variant="secondary"
               size="large"
               fullWidth
               >
