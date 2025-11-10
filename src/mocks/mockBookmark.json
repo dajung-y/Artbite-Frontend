@@ -1,0 +1,32 @@
+{  
+	"success": true,  
+	"data": [  
+		{ 
+			"id": 101,     
+			"title": "금일 노트 타이틀",      
+			"mainImageUrl": "https://i.pinimg.com/736x/21/0d/bd/210dbd0e308288e8a15a783710bfa64b.jpg",      
+			"creatorName": "어트바이트",
+			"creatorJobTitle": "마케터"    
+			},      
+		{      
+			"title": "봄날의 화사함을 나타내기위해 수체화를 사용한 작업물",      
+			"mainImageUrl": "https://i.pinimg.com/1200x/73/14/8d/73148df469ebd65a9a2de2505f01345b.jpg",      
+			"creatorName": "어트바이트",
+			"creatorJobTitle": "마케터"    
+			},    
+		{      
+			"title": "지난주: 팔레트 만들기",      
+			"mainImageUrl": "https://i.pinimg.com/736x/af/b6/35/afb635774bcb37dc5b12b7960c03bbee.jpg",      
+			"creatorName": "어트바이트",
+			"creatorJobTitle": "그래픽디자이너"      
+			},
+    {      
+      "title": "서울 포스터",      
+      "mainImageUrl": "https://i.pinimg.com/736x/81/d8/e6/81d8e6d6889b017cf273114bbf9446c3.jpg",      
+      "creatorName": "어트바이트",
+      "creatorJobTitle": "그래픽디자이너"      
+      }    
+		],  
+			"error": null,  
+			"timestamp": "2025-11-05T02:55:00"
+	}
