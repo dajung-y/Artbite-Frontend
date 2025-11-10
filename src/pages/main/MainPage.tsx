@@ -2,10 +2,14 @@
 
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
-import TestImg from '../../assets/images/profileImg.jpg';
 import { useState } from "react";
+import mockCover from '../../mocks/mockTodayCover.json';
 
 export default function MainPage() {
+
+  // api 호출
+  // 현재는 mockTodayCover 사용
+  const data = mockCover.data;
 
   const navigate = useNavigate();
   // 이미지 확장
@@ -13,22 +17,21 @@ export default function MainPage() {
   
   const handleNote = () => {
     console.log("상세페이지로 이동");
-    navigate('/detail');
+    navigate('/today');
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between text-white">
+    <div className="w-full h-[calc(100vh-80px)] flex flex-col justify-between text-white overflow-hidden">
       {/* 이미지 */}
       <div
         className={`
-          w-full overflow-hidden flex-1 transition-all duration-200
+          w-full overflow-hidden transition-all duration-200
           ${extended ? "p-0" : "flex p-4 items-center justify-center"}
         `}
-        onClick={() => setExtended((prev) => !prev)}
-      >
+        onClick={() => setExtended((prev) => !prev)}>
         <img  
-          src={TestImg}
-          alt="테스트이미지"
+          src={data.mainImageUrl}
+          alt="오늘의 작품"
           className={`w-full h-full
             ${extended ? 'object-cover' : 'object-contain'}
             `}
@@ -36,24 +39,16 @@ export default function MainPage() {
       </div>
 
       {/* 하단 컨테이너 */}
-      <div className="flex flex-col w-full px-4 pt-4 pb-8 mb-0 gap-6">
+      <div className="flex flex-col w-full px-5 pt-4 pb-12 space-y-6">
         {/* 작품 소개 */}
-        <div className="flex flex-col gap-1 text-white">
-          <div className="text-lg">
-            <span>노트 타이틀</span>
-            <span className="text-primary"> (최대 30자)</span>
-          </div>
-          <div>
-            <span className="text-sm">작업 관련 소개글이 들어가는 영역</span>
-            <span className="text-primary text-sm"> (최대 100자)</span>
-          </div>
+        <div className="flex flex-col gap-2 text-white">
+          <h3 className="text-lg font-semibold">{data.title}</h3>
+          <p className="text-sm font-light">{data.teaser}</p>
         </div>
+        
         {/* 작가 소개 */}
-        <div className="flex gap-1 text-white text-sm">
-          <span>작성자 명</span>
-          <span className="text-primary">(최대 10자)</span>
-          <span className="mx-1">·</span>
-          <span>직무명</span>
+        <div className="flex text-white">
+          <p className="text-sm font-light">{data.creatorName}</p>
         </div>
         {/* 버튼 */}
         <div>

@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": {
+    "title": "금일 노트 타이틀",
+    "teaser": "채도가 낮은 봄빛을 담는 과정",
+    "mainImageUrl": "https://i.pinimg.com/736x/25/57/54/2557546c60f6ee46df83861848eca397.jpg",
+    "creatorName": "어트바이트",
+    "publishedAt": "2025-11-05T00:00:00"
+  },
+  "error": null,
+  "timestamp": "2025-11-05T02:50:00"
+}

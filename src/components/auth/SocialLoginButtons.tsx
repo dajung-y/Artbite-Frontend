@@ -1,5 +1,5 @@
 import type React from "react";
-import Button from "../../../components/common/Button";
+import Button from "../common/Button";
 
 const socialLogins = [
   { name: "카카오", url: "kakao", color: "bg-kakao-yellow", textColor: "text-black", borderColor: "border-kakao-yellow" },
@@ -9,7 +9,7 @@ const socialLogins = [
 
 const SocialLoginButtons: React.FC = () => {
   return(
-    <div className="space-y-1.5 py-6">
+    <div className="space-y-3">
       {socialLogins.map((social) => (
         <a 
           key={social.url}
@@ -17,6 +17,7 @@ const SocialLoginButtons: React.FC = () => {
           className="block"
         >
           <Button
+            variant="custom"
             size="large"
             fullWidth
             bgColor={social.color}
