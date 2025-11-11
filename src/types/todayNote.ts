@@ -1,5 +1,5 @@
 // src/types/todayNote.ts
-// 오늘의 노트 타입 정의
+// 노트 타입 정의
 
 /**
  * 공통 타입 정의
@@ -82,13 +82,6 @@ export interface OverviewPreview {
   imageUrl: string;
 }
 
-export interface TodayNotePreview {
-  id: number;
-  cover: Cover;
-  overviewPreview: OverviewPreview;
-  externalLink?: ExternalLink;
-  creator: CreatorBase;
-}
 
 /**
  * 디테일 타입 정의
@@ -115,4 +108,66 @@ export interface TodayNoteDetail {
     updatedAt: string;
   };
   preview: null;
+}
+
+// 오늘노트 상세 응답
+export interface TodayPublishedResponse {
+  success: boolean;
+  data: TodayNoteDetail;
+  error: string | null;
+  timestamp: string;
+}
+
+/**
+ * 프리뷰 타입 정의
+ */
+
+export interface TodayNotePreview {
+  id: number;
+  cover: Cover;
+  overviewPreview: OverviewPreview;
+  externalLink?: ExternalLink;
+  creator: CreatorBase;
+}
+
+// 오늘노트 미리보기 응답
+
+export interface NotePreviewResponse {
+  success: boolean;
+  data: TodayNotePreview;
+  error: string | null;
+  timestamp: string;
+}
+
+
+/**
+ * 지난 노트
+ */
+
+// 지난노트 디테일 데이터
+export interface ArchivedNoteDetail {
+  id: number;
+  status: string;
+  tagText: string;
+  cover: Cover;
+  overview: Overview;
+  retrospect: Retrospect;
+  processes: Process[];
+  question: Question;
+  answer: Answer;
+  creatorId: number;
+  externalLink: ExternalLink;
+  creator: CreatorBase;
+  publishedAt: string;
+  archivedAt: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// 지난 노트 상세 응답
+export interface NoteResponse {
+  success: boolean;
+  data: ArchivedNoteDetail;
+  error: string | null;
+  timestamp: string;
 }

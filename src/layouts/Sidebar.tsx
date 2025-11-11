@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { FiX } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,9 +10,10 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { label: '오늘노트', to: '/today' },
-  { label: '지난노트', to: '/' },
-  { label: '북마크', to: '/' },
+  { label: '홈', to: '/'},
+  { label: '오늘의 작업노트', to: '/today' },
+  { label: '지난 작업노트', to: '/history' },
+  { label: '북마크', to: '/bookmark' },
   { label: '멤버십', to: '/membership' },
 ]
 
@@ -23,15 +24,17 @@ const bottomItems = [
 
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  if(!isOpen){
-    return null;
-  }
+
+  const location = useLocation();
+
+  if(!isOpen) return null;
+
   return(
     // 사이드바 전체 영역
     <aside 
       className="
-        absolute top-0 right-0 bg-black text-white z-50 
-        w-3/5 max-w-[400px] h-full
+        fixed top-0 right-0 bg-black text-white z-50 
+        w-3/5 max-w-[400px] h-screen
         flex flex-col justify-between"
       >
 
@@ -45,17 +48,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
         {/* 메뉴 */}
         <nav className="flex flex-col">
-          {menuItems.map((i) => (
-            <Link 
-              key={i.to}
-              to={i.to}
-              onClick={onClose}
-              className="self-stretch h-14 px-6 flex items-center" >
-              <span className="text-white text-2xl leading-9">
-                {i.label}
-              </span>
-            </Link>
-          ))}
+          {menuItems.map((i) => {
+            const isActive = location.pathname === i.to;
+            return(
+              <Link
+                key={i.to}
+                to={i.to}
+                onClick={onClose} // 이동시 사이드바 닫히게?
+                className={`
+                  self-stretch h-14 px-6 flex items-center
+                  ${isActive ? "text-primary" : "text-white"}
+                `}
+              >
+                <span className="text-xl font-semibold leading-9">{i.label}</span>
+              </Link>
+            )
+          })}
         </nav>
       </div>
       {/* 하단버튼 */}

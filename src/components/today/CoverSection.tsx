@@ -2,6 +2,7 @@
 // 오늘의 노트 페이지 표지
 
 import type { Cover } from "../../types/todayNote"
+import { formatDate } from "../../utils/formatDate";
 
 export interface CoverProps {
   cover: Cover;
@@ -9,14 +10,6 @@ export interface CoverProps {
 
 export default function CoverSection({ cover } : CoverProps) {
 
-  function formatDate(dateString: string) : string {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth()+1;
-    const day = date.getDate();
-
-    return `${year}년 ${month}월 ${day}일`
-  }
 
   return (
     <section className="flex flex-col w-full">
