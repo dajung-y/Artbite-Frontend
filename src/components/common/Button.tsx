@@ -2,38 +2,52 @@ import clsx from "clsx";
 import type React from "react";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "custom";
-  size?: "medium" | "large";
+  variant?: "primary" | "secondary" | "tertiary" | "custom";
+  size?: "sm" | "md";
   fullWidth?: boolean;
   bgColor?: string;
   textColor?: string;
   borderColor?: string;
   icon?: React.ReactNode;
+  iconPosition?: "left" | "right";
+  iconSize?: "sm" | "md";
 };
 
 export default function Button({
   variant = "primary",
-  size = "medium",
+  size = "md",
   fullWidth = false,
   bgColor,
   textColor,
   borderColor,
   icon,
+  iconPosition = "left",
+  iconSize = "sm",
+  disabled = false,
   className,
   children,
   ...rest
 }: ButtonProps) {
-  const baseStyle = "inline-flex items-center justify-center rounded-xl focus:outline-none border";
-  const sizeStyle = size === "large" ? "px-6 py-3.5 text-base font-semibold" : "px-4 py-2 text-sm";
-  const widthStyle = fullWidth ? "w-full block" : "";
-  const iconStyle = icon ? "flex-row gap-2" : "";
+  const baseStyle = "inline-flex items-center justify-center focus:outline-none border text-title4";
+  const sizeStyle = size === "md" ? "px-4 py-4 rounded-lg" : "px-3 py-3 rounded-md";
+  const widthStyle = fullWidth ? "w-full" : "";
 
   const variantStyle = 
     variant === "primary"
-     ? "bg-primary text-black border-primary"
+     ? "bg-primary border-primary text-greyscale-900"
      : variant === "secondary"
-     ? "bg-secondary text-white border-secondary"
+     ? "bg-greyscale-600 border-greyscale-600 text-greyscale-200"
+     :  variant === "tertiary"
+     ? "bg-greyscale-700 border-greyscale-700 text-greyscale-100"
      : "";
+
+  const iconStyle = clsx(
+  "flex items-center justify-center shrink-0",
+    iconSize === "sm" ? "w-4 h-4" : "w-6 h-6"
+  );
+
+  const disabledStyle = "bg-greyscale-700 border-greyscale-700 text-greyscale-400";
+
     
   const customStyle = clsx(
     bgColor,
@@ -45,15 +59,24 @@ export default function Button({
     baseStyle, 
     sizeStyle, 
     widthStyle, 
-    iconStyle, 
     variantStyle,
     customStyle,
+    disabled ? disabledStyle : "",
     className);
 
   return (
-    <button className={buttonClass} {...rest}>
-      {icon && <span>{icon}</span>}
+    <button className={buttonClass} disabled={disabled} {...rest}>
+      {icon && iconPosition === "left" && (
+        <span className={clsx(iconStyle, "mr-2")}>
+          <span className="w-full h-full">{icon}</span>
+        </span>
+      )}
       {children}
+      {icon && iconPosition === "right" && (
+        <span className={clsx(iconStyle, "ml-2")}>
+          <span className="w-full h-full">{icon}</span>
+        </span>
+      )}
     </button>
   )
 }
