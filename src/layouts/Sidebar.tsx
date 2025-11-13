@@ -1,13 +1,10 @@
 // src/layouts/Sidebar.tsx
+// 사이드바 : 스타일 적용 완료
 
-import type React from "react";
 import { FiX } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
+import { useSidebarStore } from "../stores/sidebarStore";
 
-interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const menuItems = [
   { label: '홈', to: '/'},
@@ -22,9 +19,10 @@ const bottomItems = [
   { label: '이용약관' , onclick: () => console.log('이용약관') },
 ]
 
+export default function Sidebar() {
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
   const location = useLocation();
 
   if(!isOpen) return null;
@@ -33,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     // 사이드바 전체 영역
     <aside 
       className="
-        fixed top-0 right-0 bg-black text-white z-50 
+        fixed top-0 right-0 bg-greyscale-900 text-greyscale-100 z-50 
         w-3/5 max-w-[400px] h-screen
         flex flex-col justify-between"
       >
@@ -44,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="flex justify-end px-4 pt-8 pb-4">
           <FiX 
             className="w-6 h-6"
-            onClick={onClose} />
+            onClick={closeSidebar} />
         </div>
         {/* 메뉴 */}
         <nav className="flex flex-col">
@@ -54,22 +52,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <Link
                 key={i.to}
                 to={i.to}
-                onClick={onClose} // 이동시 사이드바 닫히게?
+                onClick={closeSidebar} 
                 className={`
                   self-stretch h-14 px-6 flex items-center
-                  ${isActive ? "text-primary" : "text-white"}
+                  ${isActive ? "text-primary" : ""}
                 `}
               >
-                <span className="text-xl font-semibold leading-9">{i.label}</span>
+                <span className="text-title2">{i.label}</span>
               </Link>
             )
           })}
         </nav>
       </div>
       {/* 하단버튼 */}
-      <div className="self-stretch px-6 pb-8 flex justify-center items-center gap-6 opacity-50 text-base font-medium leading-6">
+      <div className="self-stretch p-6 inline-flex justify-start items-center">
         {bottomItems.map((btn) => (
-          <button key={btn.label} onClick={btn.onclick}>
+          <button 
+            key={btn.label} 
+            onClick={btn.onclick}
+            className="flex-1 text-center text-title4 text-greyscale-500">
             {btn.label}
           </button>
         ))}
@@ -78,4 +79,3 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   )
 }
 
-export default Sidebar
