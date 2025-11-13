@@ -5,18 +5,18 @@ import Button from "../../../components/common/Button";
 import * as axios from "axios";
 import useAuthStore from "../../../stores/authStore";
 import { signupSchema } from "../../../schemas/signupSchema";
-import z from "zod";
+import { toast } from "react-hot-toast"
+import Header from "../../../components/common/Header";
+import Toast from "../../../components/common/Toast";
 
 export default function SignupPage() {
   const navigate = useNavigate();
   const { accessToken } = useAuthStore();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
-  const [usernameError, setUsernameError] = useState<string>("");
-  const [generalError, setGeneralError] = useState<string>("");
+  const [error, setError] = useState<String | null>(null);
 
   useEffect(() => {
     if (accessToken) {
@@ -26,98 +26,92 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmailError("");
-    setPasswordError("");
-    setUsernameError("");
-    setGeneralError("");
+    setError(null);
+
+    const result = signupSchema.safeParse({email, password, username});
+    if(!result.success){
+      const firstError = result.error.issues[0];
+      setError(firstError.message);
+      return;
+    }
 
     try {
-      signupSchema.parse({ email, password, username });
-
       await axiosInstance.post('/api/auth/signup', { email, password, username });
-      
-      alert("회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.");
-      navigate('/login', { replace: true });
 
+      toast.custom(
+        <Toast message="회원가입이 완료되었습니다" />
+      )
+
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      },2000);
+      
     } catch (err: unknown) {
-      if (err instanceof z.ZodError) {
-        err.errors.forEach((error) => {
-          if (error.path[0] === "email") setEmailError(error.message);
-          if (error.path[0] === "password") setPasswordError(error.message);
-          if (error.path[0] === "username") setUsernameError(error.message);
-        });
-      } else if (axios.isAxiosError(err) && err.response) {
-        setGeneralError(err.response.data?.error?.message || "회원가입 중 오류가 발생했습니다.");
-      } else {
-        setGeneralError("회원가입 중 알 수 없는 오류가 발생했습니다.");
-      }
       console.error("회원가입 실패:", err);
+
+      if(axios.isAxiosError(err) && err.response) {
+        setError(err.response.data?.error?.message || "회원가입 중 오류가 발생했습니다");
+      } else {
+        setError("회원가입 중 알 수 없는 오류가 발생했습니다");
+      }
     }
   };
 
   return (
-    <div className="w-full h-full bg-black flex flex-col items-center justify-center p-4 text-white">
+    <div className="relative w-full h-full bg-greyscale-900 flex flex-col items-center">
+      <Header />
       {/* 로고영역 */}
-      <div className="p-8 border border-white">
+      <div className="flex-1">
         {/* 임시 텍스트 (이미지로 대체) */}
-        <h1 className="text-xl font-bold">(서비스 로고)</h1>
+        <h1 className="text-title1 text-greyscale-100">sparki</h1>
       </div>
 
       {/* 회원가입 컨테이너 */}
-      <div className="w-full px-8 space-y-8">
-        <div className="pt-6">
-          <form onSubmit={handleSignup} className="space-y-1.5">
-            <input
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setEmailError("");
-              }}
-              className="w-full px-6 py-3.5 rounded-md bg-[#2F2F2F] placeholder-white text-white font-semibold focus:outline focus:outline-white" />
-            {emailError && <p className="text-red-500 text-sm text-left px-1">{emailError}</p>}
-            
-            <input
-              type="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setPasswordError("");
-              }}
-              className="w-full px-6 py-3.5 rounded-md bg-[#2F2F2F] placeholder-white text-white font-semibold focus:outline focus:outline-white" />
-            {passwordError && <p className="text-red-500 text-sm text-left px-1">{passwordError}</p>}
-            
-            <input
-              type="text"
-              placeholder="사용자 이름"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-                setUsernameError("");
-              }}
-              className="w-full px-6 py-3.5 rounded-md bg-[#2F2F2F] placeholder-white text-white font-semibold focus:outline focus:outline-white" />
-            {usernameError && <p className="text-red-500 text-sm text-left px-1">{usernameError}</p>}
-              
-            {generalError && <p className="text-red-500 text-sm text-center">{generalError}</p>}
+      <div className="w-full px-5 pb-12">
+        <form onSubmit={handleSignup} className="flex flex-col gap-3">
+          <input
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={ (e) => setEmail(e.target.value)}
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
-            <Button
-              size="large"
-              fullWidth
-              type="submit"
-              >
-              회원가입
-            </Button>
-          </form>
-        </div>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
-        {/* 하단 링크 버튼 */}
-        <div className="flex justify-center gap-4">
-          <Link to='/login' className="text-white text-base font-semibold">
-            로그인
-          </Link>
-        </div>
+          <input
+            type="text"
+            placeholder="사용자 이름"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+
+          {/* 에러 메시지 */}
+          {error && (
+            <div className="flex justify-center py-1">
+              <p className="text-caption text-red-400">{error}</p>
+            </div>
+          )}
+
+          <Button
+            fullWidth
+            type="submit"
+            >
+            회원가입
+          </Button>
+        </form>
+
+        {/* 로그인 버튼 */}
+        
+        <Link
+          to='/login'
+          className="pt-8 flex items-center justify-center text-caption text-greyscale-200">
+          로그인
+        </Link>
       </div>
     </div>
   );

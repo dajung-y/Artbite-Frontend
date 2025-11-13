@@ -4,6 +4,7 @@ import axios from "axios";
 import { clearTokenState, getAccessTokenFromState, setAccessTokenToState} from "../stores/authStore";
 
 const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true               // refrash token 쿠키 자동 전송
 });
 

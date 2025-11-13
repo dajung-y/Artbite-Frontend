@@ -1,10 +1,12 @@
+// src/components/auth/SocialLoginButtons.tsx
+
 import type React from "react";
 import Button from "../common/Button";
 
 const socialLogins = [
-  { name: "카카오", url: "kakao", color: "bg-kakao-yellow", textColor: "text-black", borderColor: "border-kakao-yellow" },
-  { name: "네이버", url: "naver", color: "bg-naver-green", textColor: "text-white", borderColor: "border-naver-green" },
-  { name: "구글", url: "google", color: "bg-google-black", textColor: "text-white", borderColor: "border-google-border" },
+  { name: "카카오", url: "kakao", color: "bg-kakao-yellow", textColor: "text-greyscale-900", borderColor: "border-kakao-yellow" },
+  { name: "네이버", url: "naver", color: "bg-naver-green", textColor: "text-greyscale-100", borderColor: "border-naver-green" },
+  { name: "구글", url: "google", color: "bg-google-black", textColor: "text-greyscale-100", borderColor: "border-google-border" },
 ];
 
 const SocialLoginButtons: React.FC = () => {
@@ -18,7 +20,7 @@ const SocialLoginButtons: React.FC = () => {
         >
           <Button
             variant="custom"
-            size="large"
+            size="md"
             fullWidth
             bgColor={social.color}
             textColor={social.textColor}
