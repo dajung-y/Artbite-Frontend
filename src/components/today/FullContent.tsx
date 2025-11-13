@@ -13,6 +13,7 @@ import { FiInstagram } from "react-icons/fi";
 import { AiFillYoutube } from "react-icons/ai";
 import { RiBehanceFill } from "react-icons/ri";
 import { RiLinkedinBoxFill } from "react-icons/ri";
+import MemoForm from "./MemoForm";
 
 interface FullContentProps {
   data: TodayNoteDetail;
@@ -78,23 +79,34 @@ export default function FullContent({ data } : FullContentProps) {
         {note.externalLink?.sourceUrl && (
           <div className="px-5 flex justify-center">
             <Button
-              variant="secondary"
-              size="large"
-              icon={<FiLink2 className="text-white w-6 h-6 text-center" />}
+              variant="tertiary"
+              size="sm"
+              icon={<FiLink2 className="w-full h-full" />}
+              iconSize="md"
               onClick={handleExternalLink}
             >
               작업물 보러가기
             </Button>
           </div>
         )}
-        <div className="mt-8 pb-8 border-t-8 border-secondary">
+        <div className="mt-8 pb-8 border-t-8 border-greyscale-700">
 
         </div>
       </section>
 
       {/* question : 오늘의 질문 */}
-      <section>
-        {/* Q&A 컴포넌트 */}
+      <section className="flex flex-col px-5 py-4 gap-4">
+        {/* 질문 */}
+        <div className="p-4 bg-green-800 rounded-xl outline outline-1 outline-offset-[-1px] outline-green-700 inline-flex flex-col justify-start items-start gap-2">
+          <div className="text-green-400">
+            {/* 아이콘 */}
+            <h4 className="text-title4">작가의 질문</h4>
+          </div>
+          <p className="self-stretch text-body1 text-greyscale-200">{note.question.questionText}</p>
+        </div>
+        {/* 메모 컴포넌트 */}
+        <MemoForm initialMemo={note.answer?.answerText || ""}/>
+
       </section>
       
       {/* creator : 작가소개 */}
@@ -107,12 +119,16 @@ export default function FullContent({ data } : FullContentProps) {
               alt={`${note.creator.name} 이미지`}
               className="w-14 h-14 rounded-full object-cover" />
           </div>
-            <p className="text-white font-light">{note.creator.name}</p>
-            <p className="text-sm text-gray-400 font-light">{note.creator.bio}</p>
+            <p className="text-body-1 text-greyscale-100 gap-1 pb-1.5">
+              <span>{note.creator.name}</span>
+              <span> · </span>
+              {/* <span>{note.creator.jobTitle}</span> */}
+            </p>
+            <p className="text-caption text-greyscale-400">{note.creator.bio}</p>
         </div>
         
         {/* snsLink */}
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-2 pt-6">
           {availabledLinks.map(link => (
             <a  
               key={link.name}
