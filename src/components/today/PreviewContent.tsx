@@ -19,29 +19,31 @@ export default function PreviewContent( { data } : PreviewContentProps) {
       <CoverSection cover={data.cover}/>
 
       {/* overview preview : 개요 프리뷰 */}
+      <div className="relaitve">
         <ContentSection
           title={data.overviewPreview.sectionTitle}
           bodyText={data.overviewPreview.bodyPreview}
-          imageUrl={data.overviewPreview.imageUrl}
-          overlay/>
+          imageUrl={data.overviewPreview.imageUrl} />
+        
+        <div className="pb-56" />
 
-      {/* join banner : 구독유도 배너 */}
-      <section className="flex flex-col items-center px-4 py-8">
-        <div className="flex flex-col space-y-3 pb-6">
-          <p className="text-primary">결과보다 과정이 더 흥미로운 사람들을 위해</p>
-          <h2 className="text-xl text-center text-white">
-            지금 구독하고<br />
-            작가노트를 계속 읽어보세요
-          </h2>
-        </div>
-        <Button
-          size="large"
-          fullWidth
-          onClick={() => navigate('/membership')}
-        >
-          구독하고 계속 읽기
-        </Button>
-      </section>
+        {/* join banner : 구독유도 배너 */}
+        <section className="absolute bottom-0 left-0 w-full flex flex-col items-center px-4 pb-12 bg-gradient-to-t from-greyscale-900 via-greyscale-900 to-transparent">
+          <div className="flex flex-col gap-3 pt-16 pb-12">
+            <h4 className="text-title4 text-primary">결과보다 과정이 더 흥미로운 사람들을 위해</h4>
+            <h1 className="text-title1 text-greyscale-100 text-center">
+              지금 구독하고<br />
+              작가노트를 계속 읽어보세요
+            </h1>
+          </div>
+          <Button
+            fullWidth
+            onClick={() => navigate('/membership')}
+          >
+            구독하고 계속 읽기
+          </Button>
+        </section>
+      </div>
     </div>
   )
 }

@@ -2,6 +2,7 @@
 // 오늘의 노트 페이지 표지
 
 import type { Cover } from "../../types/todayNote"
+import { formatDate } from "../../utils/formatDate";
 
 export interface CoverProps {
   cover: Cover;
@@ -9,19 +10,11 @@ export interface CoverProps {
 
 export default function CoverSection({ cover } : CoverProps) {
 
-  function formatDate(dateString: string) : string {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth()+1;
-    const day = date.getDate();
-
-    return `${year}년 ${month}월 ${day}일`
-  }
 
   return (
-    <section className="flex flex-col w-full">
+    <section className="flex flex-col w-full -mt-16">
       {/* 이미지 */}
-      <div className="w-full h-80">
+      <div className="w-full aspect-[3/4]">
         <img 
           src={cover.mainImageUrl}
           alt={cover.title}
@@ -29,10 +22,14 @@ export default function CoverSection({ cover } : CoverProps) {
 
       </div>
       {/* 창작물 정보 */}
-      <div className="flex flex-col w-full px-5 py-8 text-white">
-        <h2 className="text-xl">{cover.title}</h2>
-        <p>{cover.creatorName}</p>
-        <p>{formatDate(cover.publishedAt)}</p>
+      <div className="flex flex-col w-full px-5 pt-8 pb-10 gap-4">
+        <div>
+          <h1 className="text-title1 text-greyscale-100 break-keep">{cover.title}</h1>
+        </div>
+        <div className="flex flex-col gap-1 text-caption">
+          <p className="text-greyscale-300">{cover.creatorName}</p>
+          <p className="text-greyscale-400">{formatDate(cover.publishedAt)}</p>
+        </div>
       </div>
     </section>
   )

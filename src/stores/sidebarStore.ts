@@ -1,0 +1,16 @@
+// src/stores/sidebarStore.ts
+// 사이드바 상태 전역 관리
+
+import { create } from "zustand";
+
+interface SidebarState {
+  isOpen: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
+}
+
+export const useSidebarStore = create<SidebarState>((set) => ({
+  isOpen: false,
+  openSidebar: () => set({isOpen: true}),
+  closeSidebar: () => set({isOpen: false}),
+}));

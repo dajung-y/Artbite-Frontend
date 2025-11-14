@@ -1,15 +1,14 @@
-export interface Cover {
+export interface BookmarkItem {
+  id?: number;
   title: string;
-  teaser: string;
   mainImageUrl: string;
   creatorName: string;
   creatorJobTitle: string;
-  publishedDate: string;
 }
 
-export interface NoteCoverResponse {
+export interface BookmarkResponse {
   success: boolean;
-  data: Cover;
+  data: BookmarkItem[];
   error: string | null;
   timestamp: string;
 }

@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "data": {
+    "id": 95,
+    "status": "ARCHIVED",
+    "tagText": "워터컬러",
+    "cover": {
+      "title": "지난주: 팔레트 만들기",
+      "teaser": "색 조합 실험",
+      "mainImageUrl": "https://cdn.example.com/note/95_main.jpg",
+      "creatorName": "어트바이트",
+      "publishedAt": "2025-11-02T00:00:00"
+    },
+    "overview": {
+      "sectionTitle": "Overview",
+      "bodyText": "이번 작업은 컬러 팔레트 연구가 핵심입니다...",
+      "imageUrl": "https://cdn.example.com/note/95_overview.jpg"
+    },
+    "retrospect": {
+      "sectionTitle": "Retrospect",
+      "bodyText": "되돌아보니 보색 대비를 더 살리고 싶었습니다..."
+    },
+    "processes": [
+      {
+        "position": 1,
+        "sectionTitle": "Process 1",
+        "bodyText": "초기 스케치를 진행했습니다...",
+        "imageUrl": "https://cdn.example.com/note/95_proc1.jpg"
+      },
+      {
+        "position": 2,
+        "sectionTitle": "Process 2",
+        "bodyText": "컬러 팔레트를 확정했습니다...",
+        "imageUrl": "https://cdn.example.com/note/95_proc2.jpg"
+      }
+    ],
+    "question": {
+      "questionText": "이번 작업에서 가장 어려웠던 점은?"
+    },
+    "answer": {
+      "answerText": "색감 균형을 잡는 데 시간이 걸렸습니다."
+    },
+    "creatorId": 12,
+    "externalLink": {
+      "sourceUrl": "https://blog.example.com/archive/95"
+    },
+    "creator": {
+      "id": 12,
+      "name": "어트바이트",
+      "profileImageUrl": "https://cdn.example.com/creator/12.jpg"
+    },
+    "publishedAt": "2025-11-02T00:00:00",
+    "archivedAt": "2025-11-03T00:00:00",
+    "createdAt": "2025-10-30T08:12:00",
+    "updatedAt": "2025-10-31T10:05:00"
+  },
+  "error": null,
+  "timestamp": "2025-11-05T02:52:00"
+}

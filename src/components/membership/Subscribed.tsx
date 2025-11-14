@@ -19,7 +19,7 @@ export default function Subscribed() {
     }, 3000);
   }
   return (
-    <div className="flex flex-col justify-between flex-1 w-full">
+    <div className="flex flex-col justify-between flex-1 w-full px-5">
       {/* 문구 */}
       <div className="flex-1 flex justify-center items-center">
         <h1 className="text-xl text-white text-center">
@@ -30,7 +30,6 @@ export default function Subscribed() {
       {/* 버튼 */}
       <div className="pb-8">
         <Button
-         size="large"
          fullWidth
          onClick={handleUnsubscribe}
         >

@@ -8,6 +8,8 @@ import OAuth2RedirectPage from "./pages/auth/OAuth2RedirectPage"
 import TodayPage from "./pages/today/TodayPage"
 import MembershipPage from "./pages/membership/MembershipPage"
 import { Toaster } from "react-hot-toast"
+import HistoryPage from "./pages/history/HistoryPage"
+import BookmarkPage from "./pages/bookmark/BookmarkPage"
 
 function App() {
 
@@ -24,6 +26,9 @@ function App() {
           {/* 메인 페이지들 */}
           <Route path="/" element={<MainPage />} />
           <Route path="/today" element={<TodayPage />} />
+          <Route path="/today/:id" element={<TodayPage />} /> {/* 상세 페이지*/}
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/membership" element={<MembershipPage />} />
 
           {/* 서브 페이지들 */}
