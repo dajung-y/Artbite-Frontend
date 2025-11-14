@@ -2,65 +2,111 @@
 
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
-import { useState } from "react";
-import mockCover from '../../mocks/mockTodayCover.json';
+import { useEffect, useState } from "react";
+import Header from "../../components/common/Header";
+import clsx from "clsx";
+import type { NoteCoverResponse, Cover } from "../../types/note";
+import axiosInstance from "../../api/axiosInstance";
+
+import mockTodayCover from '../../mocks/mockTodayCover.json';
+import useAuthStore from "../../stores/authStore";
+import Modal from "../../components/common/Modal";
 
 export default function MainPage() {
 
-  // api 호출
-  // 현재는 mockTodayCover 사용
-  const data = mockCover.data;
-
   const navigate = useNavigate();
-  // 이미지 확장
+  const mockCover = mockTodayCover;
+
+  const [data, setData] = useState<Cover | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [extended, setExtended] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const { accessToken } = useAuthStore();
+
+
+  // api 호출
+  useEffect(() => {
+    const fetchTodayCover = async () => {
+      try{
+        setLoading(true);
+        setError(null);
+
+        setData(mockCover.data);
+
+        // const res = await axiosInstance.get<NoteCoverResponse>("/api/notes/published/today-cover");
+        // setData(res.data.data);
+      } catch(err) {
+        console.error(err);
+        setError("데이터를 불러오지 못했습니다");
+      } finally{
+        setLoading(false);
+      }
+    };
+
+    fetchTodayCover();
+
+  },[]);
   
   const handleNote = () => {
-    console.log("상세페이지로 이동");
-    navigate('/today');
+    if(!accessToken) {
+      navigate('/login');
+    } else {
+      navigate('/today');
+    }
   };
 
   return (
-    <div className="w-full h-[calc(100vh-80px)] flex flex-col justify-between text-white overflow-hidden">
-      {/* 이미지 */}
-      <div
-        className={`
-          w-full overflow-hidden transition-all duration-200
-          ${extended ? "p-0" : "flex p-4 items-center justify-center"}
-        `}
-        onClick={() => setExtended((prev) => !prev)}>
-        <img  
-          src={data.mainImageUrl}
-          alt="오늘의 작품"
-          className={`w-full h-full
-            ${extended ? 'object-cover' : 'object-contain'}
-            `}
-          />
-      </div>
+    <div className="relative w-full h-screen flex flex-col bg-greyscale-900 overflow-hidden">
+      <Header />
+      { data && (
+        <>
+        <div 
+          className={clsx(
+          "relative w-full transition-all duration-300",
+          extended ? "flex-1 inset-0 p-0" : "px-6 py-4"
+          )}
+          onClick={() => setExtended(prev => !prev)}
+          >
 
-      {/* 하단 컨테이너 */}
-      <div className="flex flex-col w-full px-5 pt-4 pb-12 space-y-6">
-        {/* 작품 소개 */}
-        <div className="flex flex-col gap-2 text-white">
-          <h3 className="text-lg font-semibold">{data.title}</h3>
-          <p className="text-sm font-light">{data.teaser}</p>
+          {/* 메인이미지 */}
+          <img  
+            src={data.mainImageUrl}
+            alt={data.title}
+            className={clsx(
+              "w-full h-full object-contain transition-all duration-300",
+              extended ? "object-cover" : ""
+            )} />
+
         </div>
-        
-        {/* 작가 소개 */}
-        <div className="flex text-white">
-          <p className="text-sm font-light">{data.creatorName}</p>
+
+        {/* 하단 컨테이너 */}
+        <div className="absolute bottom-0 flex flex-col w-full px-5 pt-4 pb-12 gap-6 bg-gradient-to-t from-greyscale-900 via-greyscale-900 to-transparent">
+          {/* 작품 소개 */}
+          <div className="flex flex-col gap-2">
+            <h3 className="text-title3 text-greyscale-100 break-keep">{data.title}</h3>
+            <p className="text-caption text-greyscale-400">{data.teaser}</p>
+          </div>
+          
+          {/* 작가 소개 */}
+          <div className="flex items-center justify-start gap-1 text-caption text-greyscale-300">
+            <span>{data.creatorName}</span>
+            <span> · </span>
+            <span>{data.creatorJobTitle}</span>
+          </div>
+          {/* 버튼 */}
+          <div>
+            <Button
+              fullWidth
+              onClick={handleNote}
+              >
+              오늘의 작업노트 보기
+            </Button>
+          </div>
         </div>
-        {/* 버튼 */}
-        <div>
-          <Button
-            size="large"
-            fullWidth
-            onClick={handleNote}
-            >
-            오늘의 작업노트 보러가기
-          </Button>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   )
 }

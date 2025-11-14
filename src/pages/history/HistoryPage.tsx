@@ -1,8 +1,12 @@
+// src/pages/history/HistoryPage.tsx
+// 지난 작업노트 : 스타일링중
+
 import { useEffect, useState } from "react"
 import mockHistory from '../../mocks/mockHistory.json';
 import type { HistoryResponse } from "../../types/history";
 import HistoryList from "../../components/history/HistoryList";
 import Searchbar from "../../components/common/Searchbar";
+import Header from "../../components/common/Header";
 
 export default function HistoryPage() {
 
@@ -21,7 +25,8 @@ export default function HistoryPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <h1 className="px-5 py-6 text-lg text-white">지난 작업노트</h1>
+      <Header />
+      <h3 className="px-5 py-6 text-lg text-title3 text-greyscale-100">전체 작업노트</h3>
       {/* 검색창 */}
       
       {/* 노트 리스트 */}

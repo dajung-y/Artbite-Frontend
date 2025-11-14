@@ -12,7 +12,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = getAccessTokenFromState();
-    if(accessToken) {
+
+    if(config.url !=='/api/auth/logout' && accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
@@ -54,7 +55,12 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // 401 오류, 재시도 요청 아닐 때
-    if(error.response.status === 401 && originalRequest && !originalRequest._retry) {
+    if(
+      error.response.status === 401 
+      && originalRequest 
+      && !originalRequest._retry
+      && originalRequest.url !== '/api/auth/logout'
+    ) {
       // 로그인 또는 회원가입 요청에 대한 401은 토큰 재발급을 시도하지 않고 바로 에러를 반환
       if (originalRequest.url === '/api/auth/login' || originalRequest.url === '/api/auth/signup') {
         return Promise.reject(error);

@@ -2,8 +2,11 @@
 // 사이드바 : 스타일 적용 완료
 
 import { FiX } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../stores/sidebarStore";
+import useAuthStore, { clearTokenState } from "../stores/authStore";
+import axiosInstance from "../api/axiosInstance";
+import type { LogoutResponse } from "../types/auth";
 
 
 const menuItems = [
@@ -14,18 +17,40 @@ const menuItems = [
   { label: '멤버십', to: '/membership' },
 ]
 
-const bottomItems = [
-  { label: '로그아웃' , onclick: () => console.log('로그아웃') },
-  { label: '이용약관' , onclick: () => console.log('이용약관') },
-]
-
 export default function Sidebar() {
 
+  const navigate = useNavigate();
+  const { accessToken } = useAuthStore();
   const isOpen = useSidebarStore((state) => state.isOpen);
   const closeSidebar = useSidebarStore((state) => state.closeSidebar);
   const location = useLocation();
 
   if(!isOpen) return null;
+
+  // 로그인/로그아웃 버튼
+  const handleAuthButton = async () => {
+    closeSidebar();
+
+    // 로그아웃
+    if(accessToken) {
+      try{
+        await axiosInstance.post<LogoutResponse>('/api/auth/logout');
+      } catch(err) {
+        console.error(err);
+      } finally {
+        clearTokenState();
+        navigate('/login');
+      }
+    } else {
+      // 로그인 페이지로 이동
+      navigate("/login");
+    }
+  };
+
+  // 이용약관
+  const handleTermsButton = () => {
+    console.log("이용약관");
+  }
 
   return(
     // 사이드바 전체 영역
@@ -65,15 +90,17 @@ export default function Sidebar() {
         </nav>
       </div>
       {/* 하단버튼 */}
-      <div className="self-stretch p-6 inline-flex justify-start items-center">
-        {bottomItems.map((btn) => (
-          <button 
-            key={btn.label} 
-            onClick={btn.onclick}
-            className="flex-1 text-center text-title4 text-greyscale-500">
-            {btn.label}
-          </button>
-        ))}
+      <div className="p-6 flex items-center justify-between">
+        <button
+          onClick={handleAuthButton}
+          className="flex-1 text-center text-title4 text-greyscale-500" >
+          {accessToken ? "로그아웃" : "로그인"}
+        </button>
+        <button
+          onClick={handleTermsButton}
+          className="flex-1 text-center text-title4 text-greyscale-500" >
+          이용약관
+        </button>
       </div>
     </aside>
   )

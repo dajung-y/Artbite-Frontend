@@ -46,9 +46,6 @@ export default function Button({
     iconSize === "sm" ? "w-4 h-4" : "w-6 h-6"
   );
 
-  const disabledStyle = "bg-greyscale-700 border-greyscale-700 text-greyscale-400";
-
-    
   const customStyle = clsx(
     bgColor,
     textColor,
@@ -61,7 +58,7 @@ export default function Button({
     widthStyle, 
     variantStyle,
     customStyle,
-    disabled ? disabledStyle : "",
+    "disabled:bg-greyscale-700 disabled:border-greyscale-700 disabled:text-greyscale-400 disabled:opacity-100 disabled:cursor-not-allowed",
     className);
 
   return (

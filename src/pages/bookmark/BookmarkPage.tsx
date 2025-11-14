@@ -1,10 +1,12 @@
 // src/pages/bookmark/BookmarkPage.tsx
+// 북마크페이지 :
 
 import { useEffect, useState } from 'react';
 import BookmarkList from '../../components/bookmark/BookmarkList';
 import mockBookmark from '../../mocks/mockBookmark.json';
 import type { BookmarkResponse } from '../../types/bookmark';
 import Searchbar from '../../components/common/Searchbar';
+import Header from '../../components/common/Header';
 
 export default function BookmarkPage() {
   const [data, setData] = useState<BookmarkResponse['data'] | null>(null);
@@ -23,6 +25,7 @@ export default function BookmarkPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
+      <Header />
       <h1 className="px-5 py-6 text-lg text-white">북마크</h1>
 
       {loading ? (

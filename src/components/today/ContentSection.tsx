@@ -26,12 +26,12 @@ export default function ContentSection({
         </div>
       )}
       {/* 타이틀 + 내용 */}
-      <div className="relative flex flex-col px-5 py-8 text-white">
+      <div className="relative flex flex-col px-5 py-8">
         {overlay && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         )}
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="my-6 text-base font-light">{bodyText}</p>
+        <h2 className="text-title2 text-greyscale-100 break-keep">{title}</h2>
+        <p className="my-6 text-body1-long text-greyscale-300">{bodyText}</p>
       </div>
     </section>
   )

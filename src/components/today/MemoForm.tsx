@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { AiOutlineBulb } from "react-icons/ai";
 import Button from "../common/Button";
+import Modal from "../common/Modal";
 
 interface MemoFormProps {
   initialMemo?: string;
@@ -12,6 +13,8 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
 
   const hasSavedMemo = initialMemo.length > 0;
 
@@ -62,6 +65,7 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
     console.log('메모삭제');
     setMemoValue("");
     setIsEditing(false);
+    setIsModalOpen(false);
   }
 
   return (
@@ -108,7 +112,7 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
               borderColor="border-greyscale-900"
               textColor="text-greyscale-100"
               className="w-full"
-              onClick={handleDeleteMemo}>
+              onClick={() => setIsModalOpen(true)}>
               삭제
             </Button>
             <Button
@@ -118,6 +122,15 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
               onClick={handleUpdateMemo}>
               수정
             </Button>
+
+            {isModalOpen && (
+              <Modal
+              title="정말 삭제할까요?"
+              subtitle="나의 답변이 사라져요"
+              confirmText="삭제"
+              onCancel={() => setIsModalOpen(false)}
+              onConfirm={handleDeleteMemo} />
+            )}
           </>
         ) : (
           <Button

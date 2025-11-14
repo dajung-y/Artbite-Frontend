@@ -9,6 +9,7 @@ import mockArchivedDetail from '../../mocks/mockArchivedDetail.json';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { ArchivedNoteDetail, TodayNoteDetail, TodayNotePreview } from "../../types/todayNote";
+import Header from "../../components/common/Header";
 
 export default function TodayPage() {
 
@@ -75,6 +76,7 @@ export default function TodayPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
+      <Header />
       
       { data && isSubscribed ? (
         <FullContent data={data} />
