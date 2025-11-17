@@ -1,7 +1,6 @@
 // src/components/today/FullContent.tsx
 // 구독자 전용 콘텐츠
 
-import type { TodayNoteDetail } from "../../types/todayNote";
 import Button from "../common/Button";
 import ContentSection from "./ContentSection";
 import CoverSection from "./CoverSection";
@@ -17,16 +16,15 @@ import { ReactComponent as InstagramIcon } from "@/assets/icons/icon-instagram.s
 import { ReactComponent as BehanceIcon } from "@/assets/icons/icon-behance.svg";
 import { ReactComponent as NewsIcon } from "@/assets/icons/icon-news.svg";
 
-
 import MemoForm from "./MemoForm";
+import type { NoteDetail } from "../../types/note";
 
 interface FullContentProps {
-  data: TodayNoteDetail;
+  data: NoteDetail;
 }
 
 export default function FullContent({ data } : FullContentProps) {
 
-  const note = data.note;
 
   const {
     instagramUrl,
@@ -35,7 +33,7 @@ export default function FullContent({ data } : FullContentProps) {
     xUrl,
     blogUrl,
     newsUrl
-  } = note.creator;
+  } = data.creator;
 
   const snsLinks = [
     { name: "Instagram", url: instagramUrl, icon: <InstagramIcon className="w-6 h-6"/>},
@@ -50,21 +48,23 @@ export default function FullContent({ data } : FullContentProps) {
 
   // 외부링크
   const handleExternalLink = () => {
-    console.log("외부 링크로 이동");
-  }
+    if(data.externalLink?.sourceUrl) {
+      window.open(data.externalLink.sourceUrl, "_blank", "noopener,noreferrer");
+    }    
+  };
   return (
     <div className="w-full h-full">
       {/* cover : 표지 */}
-      <CoverSection cover={note.cover} />
+      <CoverSection cover={data.cover} />
 
       {/* overview : 개요 */}
       <ContentSection 
-        title={note.overview.sectionTitle}
-        bodyText={note.overview.bodyText}
-        imageUrl={note.overview.imageUrl} />
+        title={data.overview.sectionTitle}
+        bodyText={data.overview.bodyText}
+        imageUrl={data.overview.imageUrl} />
 
       {/* processes : 본문 */}
-      {note.processes.map((pro) => (
+      {data.processes.map((pro) => (
         <div key={pro.position}>
           <ContentSection
             title={pro.sectionTitle}
@@ -75,13 +75,13 @@ export default function FullContent({ data } : FullContentProps) {
 
       {/* retrospect : 마치며 */}
       <ContentSection
-        title={note.retrospect.sectionTitle}
-        bodyText={note.retrospect.bodyText} />
+        title={data.retrospect.sectionTitle}
+        bodyText={data.retrospect.bodyText} />
 
-      {/* devider : 링크?, 구분선 */}
+      {/* devider : 링크, 구분선 */}
       <section>
         {/* 외부링크 */}
-        {note.externalLink?.sourceUrl && (
+        {data.externalLink?.sourceUrl && (
           <div className="px-5 flex justify-center">
             <Button
               variant="tertiary"
@@ -95,7 +95,6 @@ export default function FullContent({ data } : FullContentProps) {
           </div>
         )}
         <div className="mt-8 pb-8 border-t-8 border-greyscale-700">
-
         </div>
       </section>
 
@@ -109,10 +108,10 @@ export default function FullContent({ data } : FullContentProps) {
               <h4 className="text-title4">작가의 질문</h4>
             </div>
           </div>
-          <p className="self-stretch text-body1 text-greyscale-200">{note.question.questionText}</p>
+          <p className="self-stretch text-body1 text-greyscale-200">{data.question.questionText}</p>
         </div>
         {/* 메모 컴포넌트 */}
-        <MemoForm initialMemo={note.answer?.answerText || ""}/>
+        <MemoForm initialMemo={data.answer?.answerText || ""}/>
 
       </section>
       
@@ -122,16 +121,16 @@ export default function FullContent({ data } : FullContentProps) {
         <div className="flex flex-col justify-center items-center">
           <div className="pb-3">
             <img  
-              src={note.creator.profileImageUrl}
-              alt={`${note.creator.name} 이미지`}
+              src={data.creator.profileImageUrl}
+              alt={`${data.creator.name} 이미지`}
               className="w-14 h-14 rounded-full object-cover" />
           </div>
             <p className="text-body-1 text-greyscale-100 gap-1 pb-1.5">
-              <span>{note.creator.name}</span>
+              <span>{data.creator.name}</span>
               <span> · </span>
-              {/* <span>{note.creator.jobTitle}</span> */}
+              <span>{data.creator.jobTitle}</span>
             </p>
-            <p className="text-caption text-greyscale-400">{note.creator.bio}</p>
+            <p className="text-caption text-greyscale-400 text-center">{data.creator.bio}</p>
         </div>
         
         {/* snsLink */}

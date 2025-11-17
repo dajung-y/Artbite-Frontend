@@ -5,48 +5,39 @@ import Button from "../../components/common/Button";
 import { useEffect, useState } from "react";
 import Header from "../../components/common/Header";
 import clsx from "clsx";
-import type { NoteCoverResponse, Cover } from "../../types/note";
-import axiosInstance from "../../api/axiosInstance";
-
-import mockTodayCover from '../../mocks/mockTodayCover.json';
 import useAuthStore from "../../stores/authStore";
-import Modal from "../../components/common/Modal";
+import { mockNoteApi } from "../../api/mockNoteApi";
+import type { Cover } from "../../types/note";
 
 export default function MainPage() {
 
   const navigate = useNavigate();
-  const mockCover = mockTodayCover;
 
   const [data, setData] = useState<Cover | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [extended, setExtended] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { accessToken } = useAuthStore();
 
 
   // api 호출
   useEffect(() => {
-    const fetchTodayCover = async () => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       try{
-        setLoading(true);
-        setError(null);
-
-        setData(mockCover.data);
-
-        // const res = await axiosInstance.get<NoteCoverResponse>("/api/notes/published/today-cover");
-        // setData(res.data.data);
-      } catch(err) {
+        // 이후에 noteApi로 변경
+        const res = await mockNoteApi.getTodayCover();
+        setData(res);
+      } catch(err){
         console.error(err);
         setError("데이터를 불러오지 못했습니다");
-      } finally{
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchTodayCover();
-
+    fetchData();
   },[]);
   
   const handleNote = () => {
@@ -56,6 +47,24 @@ export default function MainPage() {
       navigate('/today');
     }
   };
+
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center bg-greyscale-900">
+        <p className="text-greyscale-100">로딩중...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center items-center bg-greyscale-900 gap-4">
+        <p className="text-red-400">{error}</p>
+        <Button onClick={() => window.location.reload()}>재시도</Button>
+      </div>
+    );
+  }
+
 
   return (
     <div className="relative w-full h-screen flex flex-col bg-greyscale-900 overflow-hidden">

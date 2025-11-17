@@ -1,7 +1,8 @@
 // src/components/today/CoverSection.tsx
 // 오늘의 노트 페이지 표지
 
-import type { Cover } from "../../types/todayNote"
+
+import type { Cover } from "../../types/note";
 import { formatDate } from "../../utils/formatDate";
 
 export interface CoverProps {
@@ -27,8 +28,12 @@ export default function CoverSection({ cover } : CoverProps) {
           <h1 className="text-title1 text-greyscale-100 break-keep">{cover.title}</h1>
         </div>
         <div className="flex flex-col gap-1 text-caption">
-          <p className="text-greyscale-300">{cover.creatorName}</p>
-          <p className="text-greyscale-400">{formatDate(cover.publishedAt)}</p>
+          <div className="text-greyscale-300 flex gap-1">
+            <span>{cover.creatorName}</span>
+            <span>·</span>
+            <span>{cover.creatorJobTitle}</span>
+          </div>
+          <p className="text-greyscale-400">{formatDate(cover.publishedDate)}</p>
         </div>
       </div>
     </section>

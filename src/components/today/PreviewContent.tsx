@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import CoverSection from "./CoverSection";
-import type { TodayNotePreview } from "../../types/todayNote";
 import ContentSection from "./ContentSection";
+import type { NotePreview } from "../../types/note";
 
 interface PreviewContentProps {
-  data: TodayNotePreview;
+  data: NotePreview;
 }
 export default function PreviewContent( { data } : PreviewContentProps) {
 
   const navigate = useNavigate();
+  console.log(data);
 
   if(!data) return null;
 
@@ -21,11 +22,11 @@ export default function PreviewContent( { data } : PreviewContentProps) {
       {/* overview preview : 개요 프리뷰 */}
       <div className="relaitve">
         <ContentSection
-          title={data.overviewPreview.sectionTitle}
-          bodyText={data.overviewPreview.bodyPreview}
-          imageUrl={data.overviewPreview.imageUrl} />
+          title={data.overview.sectionTitle}
+          bodyText={data.overview.bodyText}
+          imageUrl={data.overview.imageUrl} />
         
-        <div className="pb-56" />
+        <div className="pb-48" />
 
         {/* join banner : 구독유도 배너 */}
         <section className="absolute bottom-0 left-0 w-full flex flex-col items-center px-4 pb-12 bg-gradient-to-t from-greyscale-900 via-greyscale-900 to-transparent">
