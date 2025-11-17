@@ -7,7 +7,7 @@ interface OverlayProps {
 export default function Overlay({ onClick }: OverlayProps) {
   return (
     <div 
-      className="fixed inset-0 z-[999] bg-black/50"
+      className="fixed inset-0 z-[999] bg-black/60"
       onClick={onClick}
       />
   )

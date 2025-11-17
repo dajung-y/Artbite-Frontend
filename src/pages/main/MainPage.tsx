@@ -64,8 +64,8 @@ export default function MainPage() {
         <>
         <div 
           className={clsx(
-          "relative w-full transition-all duration-300",
-          extended ? "flex-1 inset-0 p-0" : "px-6 py-4"
+          "w-full flex-1 justify-center items-center transition-all duration-300",
+          extended ? "inset-0 -mt-16" : "px-6 py-4"
           )}
           onClick={() => setExtended(prev => !prev)}
           >
@@ -82,7 +82,7 @@ export default function MainPage() {
         </div>
 
         {/* 하단 컨테이너 */}
-        <div className="absolute bottom-0 flex flex-col w-full px-5 pt-4 pb-12 gap-6 bg-gradient-to-t from-greyscale-900 via-greyscale-900 to-transparent">
+        <div className="flex flex-col w-full px-5 pt-4 pb-12 gap-6 bg-gradient-to-t from-greyscale-900 via-greyscale-900 to-transparent">
           {/* 작품 소개 */}
           <div className="flex flex-col gap-2">
             <h3 className="text-title3 text-greyscale-100 break-keep">{data.title}</h3>

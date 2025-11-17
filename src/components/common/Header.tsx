@@ -2,9 +2,13 @@
 
 import clsx from "clsx";
 import type React from "react";
-import { FiMenu } from "react-icons/fi";
-import { FiBookmark } from "react-icons/fi";
-import { FiShare2 } from "react-icons/fi";
+
+
+import { ReactComponent as MemuIcon } from "@/assets/icons/icon-menu.svg";
+import { ReactComponent as BookmarkIcon } from "@/assets/icons/icon-bookmark.svg";
+import { ReactComponent as ShareIcon } from "@/assets/icons/icon-share.svg";
+import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-icon.svg"
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
 
@@ -39,27 +43,28 @@ const Header: React.FC<HeaderProps> = () => {
       )}
     >
       {/* 왼쪽 : 홈 아이콘 */}
-      <div className="flex items-center gap-1 text-greyscale-100"
+      <div className="w-20 h-6"
            onClick={() => navigate('/')}>
-        Home Icon
+        <LogoIcon className="w-full h-full" />
       </div>
 
       {/* 오른쪽 : 아이콘 */}
       <div className="flex items-center justify-start gap-2.5">
         { showMoreIcons && (
           <>
-            <FiShare2 
-              className="w-6 h-6 text-white" 
+            <ShareIcon
+              className="w-6 h-6" 
               onClick={handleShare} />
-            <FiBookmark
-              className="w-6 h-6 text-white"
+            <BookmarkIcon
+              className="w-6 h-6"
               onClick={handleBookmark} />
           </>
         )}
 
-        <FiMenu 
-          className="w-6 h-6 text-white"
+        <MemuIcon
+          className="w-6 h-6"
           onClick={openSidebar} />
+
       </div>
     </header>
   );

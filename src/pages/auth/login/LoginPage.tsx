@@ -5,6 +5,7 @@ import useAuthStore from "../../../stores/authStore";
 import SocialLoginButtons from "../../../components/auth/SocialLoginButtons";
 import Header from "../../../components/common/Header";
 import LoginForm from "../../../components/auth/LoginForm";
+import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-text.svg"
 
 export default function LoginPage() {
 
@@ -24,9 +25,9 @@ export default function LoginPage() {
       <Header />
 
       {/* 로고영역 */}
-      <div className="flex-1">
-        {/* 임시 텍스트 (이미지로 대체) */}
-        <h1 className="text-title1 text-greyscale-100">sparki</h1>
+      <div className="flex-1 flex flex-col justify-center items-center">
+        <h3 className="text-title3 text-greyscale-100">생각이 튀는 순간</h3>
+        <LogoIcon className="w-full" />
       </div>
 
       {/* 로그인 컨테이너 */}
@@ -42,7 +43,7 @@ export default function LoginPage() {
             <button
               onClick={() => setShowEmailLogin(false)}
               className="text-caption text-greyscale-200">
-              소셜 로그인
+              아이디 찾기
             </button>
           </div>
 

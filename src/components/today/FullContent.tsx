@@ -5,14 +5,19 @@ import type { TodayNoteDetail } from "../../types/todayNote";
 import Button from "../common/Button";
 import ContentSection from "./ContentSection";
 import CoverSection from "./CoverSection";
-import { FiLink2 } from "react-icons/fi";
+
+import { ReactComponent as LinkIcon } from "@/assets/icons/icon-link.svg";
+import { ReactComponent as QuestionIcon } from "@/assets/icons/icon-question.svg";
 
 // snslink icons
-import { RiTwitterXFill } from "react-icons/ri";
-import { FiInstagram } from "react-icons/fi";
-import { AiFillYoutube } from "react-icons/ai";
-import { RiBehanceFill } from "react-icons/ri";
-import { RiLinkedinBoxFill } from "react-icons/ri";
+import { ReactComponent as YoutubeIcon } from "@/assets/icons/icon-youtube.svg";
+import { ReactComponent as XIcon } from "@/assets/icons/icon-x.svg";
+import { ReactComponent as LinkedinIcon } from "@/assets/icons/icon-linkedin.svg";
+import { ReactComponent as InstagramIcon } from "@/assets/icons/icon-instagram.svg";
+import { ReactComponent as BehanceIcon } from "@/assets/icons/icon-behance.svg";
+import { ReactComponent as NewsIcon } from "@/assets/icons/icon-news.svg";
+
+
 import MemoForm from "./MemoForm";
 
 interface FullContentProps {
@@ -33,12 +38,12 @@ export default function FullContent({ data } : FullContentProps) {
   } = note.creator;
 
   const snsLinks = [
-    { name: "Instagram", url: instagramUrl, icon: <FiInstagram className="w-6 h-6"/>},
-    { name: "Youtube", url: youtubeUrl, icon: <AiFillYoutube className="w-6 h-6"/>},
-    { name: "Behance", url: behanceUrl, icon: <RiBehanceFill className="w-6 h-6"/>},
-    { name: "X", url: xUrl, icon: <RiTwitterXFill className="w-6 h-6"/>},
-    { name: "Blog", url: blogUrl, icon: <RiLinkedinBoxFill className="w-6 h-6"/> },
-    { name: "News", url: newsUrl, icon: <RiLinkedinBoxFill className="w-6 h-6"/>},
+    { name: "Instagram", url: instagramUrl, icon: <InstagramIcon className="w-6 h-6"/>},
+    { name: "Youtube", url: youtubeUrl, icon: <YoutubeIcon className="w-6 h-6"/>},
+    { name: "Behance", url: behanceUrl, icon: <BehanceIcon className="w-6 h-6"/>},
+    { name: "X", url: xUrl, icon: <XIcon className="w-6 h-6"/>},
+    { name: "Blog", url: blogUrl, icon: <LinkedinIcon className="w-6 h-6"/> },
+    { name: "News", url: newsUrl, icon: <NewsIcon className="w-6 h-6"/>},
   ]
 
   const availabledLinks = snsLinks.filter(link => !!link.url);
@@ -81,7 +86,7 @@ export default function FullContent({ data } : FullContentProps) {
             <Button
               variant="tertiary"
               size="sm"
-              icon={<FiLink2 className="w-full h-full" />}
+              icon={<LinkIcon className="w-6 h-6" />}
               iconSize="md"
               onClick={handleExternalLink}
             >
@@ -99,8 +104,10 @@ export default function FullContent({ data } : FullContentProps) {
         {/* 질문 */}
         <div className="p-4 bg-green-800 rounded-xl outline outline-1 outline-offset-[-1px] outline-green-700 inline-flex flex-col justify-start items-start gap-2">
           <div className="text-green-400">
-            {/* 아이콘 */}
-            <h4 className="text-title4">작가의 질문</h4>
+            <div className="flex gap-1">
+              <QuestionIcon className="w-6 h-6"/>
+              <h4 className="text-title4">작가의 질문</h4>
+            </div>
           </div>
           <p className="self-stretch text-body1 text-greyscale-200">{note.question.questionText}</p>
         </div>
