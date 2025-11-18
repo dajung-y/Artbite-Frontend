@@ -3,19 +3,20 @@ import React, { useEffect, useRef, useState } from "react"
 import Button from "../common/Button";
 import Modal from "../common/Modal";
 import { ReactComponent as AnswerIcon } from "@/assets/icons/icon-answer.svg";
+import { answerApi } from "../../api/answerApi";
 
 interface MemoFormProps {
+  questionId: number;
   initialMemo?: string;
 }
 
-export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
+export default function MemoForm({ questionId, initialMemo = "" }: MemoFormProps) {
 
   const [memoValue, setMemoValue] = useState<string>(initialMemo);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
 
   const hasSavedMemo = initialMemo.length > 0;
 
@@ -37,7 +38,7 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
   const handleFocus = () => setIsFocused(true);
 
   // 메모 저장, 수정, 삭제 핸들러
-  const handleSaveMemo = () => {
+  const handleSaveMemo = async () => {
     console.log('메모 작성, 수정');
 
     // 수정없을 시 api 호출 안함
@@ -46,11 +47,14 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
     try{
       if(!initialMemo){
         // 새 메모 작성 : POST
+        await answerApi.postAnswer(questionId, {answerText: memoValue});
+        console.log("POST 성공");
       } else{
         // 메모 수정 : PUT
+        await answerApi.putAnswer(questionId, {answerText: memoValue});
+        console.log("PUT 성공");
       }
 
-      // 저장 후 상태 업데이트
       setIsEditing(false);
     } catch(err) {
       console.error("메모 저장 오류")
@@ -58,16 +62,21 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
   };
 
   const handleUpdateMemo = () => {
-    console.log('수정모드');
     setIsEditing(true);
   }
 
-  const handleDeleteMemo = () => {
-    console.log('메모삭제');
-    setMemoValue("");
-    setIsEditing(false);
-    setIsModalOpen(false);
-  }
+  const handleDeleteMemo = async () => {
+
+    try{
+      await answerApi.deleteAnswer(questionId);
+      console.log("DELETE 성공");
+      setMemoValue("");
+      setIsEditing(false);
+      setIsModalOpen(false);
+    } catch(err){
+      console.error("메모삭제 오류", err);
+    }
+  };
 
   return (
     <div 
@@ -100,7 +109,6 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
           <span className="text-greyscale-500">/200</span>
         </div>
       )}
-
 
       {/* 버튼 영역 */}
       <div className="flex w-full pt-4 gap-2.5">

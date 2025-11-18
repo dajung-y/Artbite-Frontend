@@ -25,7 +25,6 @@ interface FullContentProps {
 
 export default function FullContent({ data } : FullContentProps) {
 
-
   const {
     instagramUrl,
     youtubeUrl,
@@ -111,7 +110,9 @@ export default function FullContent({ data } : FullContentProps) {
           <p className="self-stretch text-body1 text-greyscale-200">{data.question.questionText}</p>
         </div>
         {/* 메모 컴포넌트 */}
-        <MemoForm initialMemo={data.answer?.answerText || ""}/>
+        <MemoForm 
+          questionId={data.question.questionId}
+          initialMemo={data.answer?.answerText || ""} />
 
       </section>
       
