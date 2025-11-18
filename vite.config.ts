@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://api.sparki-today.com',
+        target: 'https://api.sparki-today.com',
         changeOrigin: true,
       },
       '/oauth2/authorization': {
@@ -21,5 +21,8 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
+  },
+  define: {
+    'import.meta.env.VITE_TOSS_CLIENT_KEY': JSON.stringify('test_ck_0RnYX2w532qqJXg2lpXl8NeyqApQ')
   }
 })

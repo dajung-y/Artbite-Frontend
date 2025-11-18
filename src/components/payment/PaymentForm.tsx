@@ -9,6 +9,13 @@ import { paymentApi } from "../../api/paymentApi";
 const MEMBER_FEE = 3900;
 const PLAN_CODE = 'DEFAULT_MEMBER_PLAN';
 
+// Toss Payments SDK 로드 후 window 객체에 할당된 TossPayments 함수를 사용하기 위한 타입 선언
+declare global {
+  interface Window {
+    TossPayments: any;
+  }
+}
+
 export default function PaymentForm() {
   const navigate = useNavigate();
 
@@ -30,6 +37,15 @@ export default function PaymentForm() {
   const handlePay = async () => {
     setLoading(true);
     setError(null);
+
+    const clientKey = import.meta.env.VITE_TOSS_CLIENT_KEY;
+    if (!clientKey) {
+      setError("Toss Payments 클라이언트 키가 설정되지 않았습니다.");
+      setLoading(false);
+      return;
+    }
+    const tossPayments = window.TossPayments(clientKey);
+
     try{
       const req: PaymentRequest = {
         payType,
@@ -42,15 +58,27 @@ export default function PaymentForm() {
 
       const response = await paymentApi.postPaymentToss(req);
 
-      if(response.success){
-        navigate('/payment');
+      if(response.success && response.data){
+        const paymentData = response.data;
+        // 백엔드에서 받은 정보로 Toss 결제창을 호출합니다.
+        tossPayments.requestPayment(paymentData.payType, {
+          amount: paymentData.amount,
+          orderId: paymentData.orderId,
+          orderName: paymentData.orderName,
+          customerName: paymentData.customerName,
+          customerEmail: paymentData.customerEmail,
+          successUrl: paymentData.successUrl,
+          failUrl: paymentData.failUrl
+        });
       } else {
-        setError(response.error?.message || '결제에 실패했습니다')
+        setError(response.error?.message || '결제 정보 생성에 실패했습니다');
       } 
     } catch(err: any){
       console.error(err.response?.data);
       setError(err.response?.data?.message || '서버 오류로 결제에 실패했습니다');
     } finally {
+      // requestPayment가 호출되면 페이지가 리디렉션되므로, 로딩 상태를 다시 false로 설정할 필요가 없을 수 있습니다.
+      // 하지만 오류 발생 시에는 필요합니다.
       setLoading(false);
     }
   }
@@ -105,9 +133,12 @@ export default function PaymentForm() {
         </div>
         <Button
           fullWidth
-          onClick={handlePay} >
-          3,900원 결제하기  
+          onClick={handlePay}
+          disabled={loading}
+          >
+          {loading ? '처리 중...' : '3,900원 결제하기'}
         </Button>
+        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       </div>
     </div>
   )
