@@ -7,7 +7,7 @@ export default function MembershipPage() {
 
   const { isSubscribed } = useSubscriptionStore();
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-full flex flex-col">
       <Header />
 
       {/* 구독 상태에 따른 컴포넌트 렌더링 */}

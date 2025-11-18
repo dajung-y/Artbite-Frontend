@@ -11,6 +11,8 @@ import { Toaster } from "react-hot-toast"
 import HistoryPage from "./pages/history/HistoryPage"
 import BookmarkPage from "./pages/bookmark/BookmarkPage"
 import OnboardingPage from "./pages/onboard/OnboardingPage"
+import PaymentPage from "./pages/payment/PaymentPage"
+
 
 function App() {
   const [isFirstVisit, setIsFirstVisit] = useState<boolean | null>(null);
@@ -51,6 +53,7 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/membership" element={<MembershipPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
 
           {/* 서브 페이지들 */}
           <Route path="/login" element={<LoginPage />} />
