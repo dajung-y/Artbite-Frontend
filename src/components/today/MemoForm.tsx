@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
-import { AiOutlineBulb } from "react-icons/ai";
+
 import Button from "../common/Button";
 import Modal from "../common/Modal";
+import { ReactComponent as AnswerIcon } from "@/assets/icons/icon-answer.svg";
 
 interface MemoFormProps {
   initialMemo?: string;
@@ -74,10 +75,10 @@ export default function MemoForm({ initialMemo = "" }: MemoFormProps) {
         ${isFocused ? "outline-greyscale-400" : "outline-greyscale-600"}`}>
       {/* 헤딩 */}
       <div className="flex gap-1 text-greyscale-400 self-stretch justify-start">
-        <div className="w-4 h-4">
-          <AiOutlineBulb className="w-full h-full" />
+        <div className="flex gap-1 pb-2.5">
+          <AnswerIcon className="w-6 h-6" />
+          <h4 className="text-title4">나의 답변</h4>
         </div>
-        <h3>나의 답변</h3>
       </div>
 
       {/* 텍스트 입력 */}

@@ -1,12 +1,13 @@
 // src/layouts/Sidebar.tsx
 // 사이드바 : 스타일 적용 완료
 
-import { FiX } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../stores/sidebarStore";
 import useAuthStore, { clearTokenState } from "../stores/authStore";
 import axiosInstance from "../api/axiosInstance";
 import type { LogoutResponse } from "../types/auth";
+import { ReactComponent as CloseIcon } from "@/assets/icons/icon-close-white.svg";
+
 
 
 const menuItems = [
@@ -65,7 +66,7 @@ export default function Sidebar() {
       <div className="flex flex-col gap-2">
         {/* 닫기버튼 */}
         <div className="flex justify-end px-4 pt-8 pb-4">
-          <FiX 
+          <CloseIcon
             className="w-6 h-6"
             onClick={closeSidebar} />
         </div>

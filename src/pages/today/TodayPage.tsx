@@ -2,57 +2,64 @@ import FullContent from "../../components/today/FullContent";
 import PreviewContent from "../../components/today/PreviewContent";
 import { useSubscriptionStore } from "../../stores/subscriptionStore"
 
-import mockDetail from '../../mocks/mockTodayNoteDetail.json';
-import mockPreview from '../../mocks/mockTodayNotePreview.json';
-import mockArchivedDetail from '../../mocks/mockArchivedDetail.json';
-
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import type { ArchivedNoteDetail, TodayNoteDetail, TodayNotePreview } from "../../types/todayNote";
+
 import Header from "../../components/common/Header";
+import type { NoteData } from "../../types/note";
+import { mockNoteApi } from "../../api/mockNoteApi";
+
 
 export default function TodayPage() {
 
   const { id } = useParams();
   const { isSubscribed } = useSubscriptionStore();
 
-  const [data, setData] = useState<TodayNoteDetail | TodayNotePreview | ArchivedNoteDetail | null>(null);
+  const [data, setData] = useState<NoteData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string|null>(null);
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    
-    const timer = setTimeout(() => {
-      try{
-        let response: TodayNoteDetail | TodayNotePreview | ArchivedNoteDetail;
 
-        if(id) {
-          if(!isSubscribed){
-            throw new Error("구독자 전용 콘텐츠입니다");
+  // api 호출
+  useEffect(() => {
+
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        let response: NoteData;
+
+        if(!id){
+          const todayData = await mockNoteApi.getTodayDetail();
+          if(todayData?.accessible){
+            response = { accessible: true, note: todayData.note};
+          } else {
+            response = {accessible: false, preview: todayData?.preview ?? null}
           }
-          response = mockArchivedDetail.data as ArchivedNoteDetail;
         } else {
-          response = isSubscribed
-            ? (mockDetail.data as TodayNoteDetail)
-            : (mockPreview.data as TodayNotePreview)
+          const archivedData = await mockNoteApi.getArchivedNote(Number(id));
+          if(archivedData?.accessible) {
+            response = { accessible: true, note: archivedData.note};
+          } else {
+            response = {accessible: false, preview: archivedData?.preview ?? null};
+          }
         }
 
         setData(response);
-      } catch(err: any) {
-        setError(err.message)
-      } finally{
+      } catch(err: any){
+        setError(err.message || "데이터를 불러오는 중 오류가 발생했습니다");
+      } finally {
         setLoading(false);
       }
-    }, 1500);
+    };
 
-    return () => clearTimeout(timer);
+    fetchData();
   }, [id,isSubscribed]);
 
   if(loading) {
     return (
-      <div className="text-white">
+      <div className="text-title3 text-greyscale-100">
         데이터 불러오는 중...
       </div>
     )
@@ -60,7 +67,7 @@ export default function TodayPage() {
 
   if(error) {
     return(
-      <div className="text-white">
+      <div className="text-title3 text-greyscale-100">
         {error}
       </div>
     )
@@ -68,7 +75,7 @@ export default function TodayPage() {
 
   if(!data) {
     return(
-      <div className="text-white">
+      <div className="text-title3 text-greyscale-100">
         데이터를 찾을 수 없습니다
       </div>
     )
@@ -78,10 +85,12 @@ export default function TodayPage() {
     <div className="w-full h-full flex flex-col">
       <Header />
       
-      { data && isSubscribed ? (
-        <FullContent data={data} />
+      { data.accessible && data.note ? (
+        <FullContent data={data.note} />
+      ) : data.preview ? (
+        <PreviewContent data={data.preview} />
       ) : (
-        <PreviewContent data={data} />
+        <div>노트 정보가 없습니다</div>
       )}
     </div>
   )

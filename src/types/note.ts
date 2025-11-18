@@ -71,9 +71,9 @@ export interface NoteDetail {
   externalLink?: ExternalLink;
   creator: Creator;
   publishedAt: string;
-  archivedAt: string;
-  createdAt: string;
-  updatedAt: string;
+  archivedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface NotePreview {
@@ -85,8 +85,8 @@ export interface NotePreview {
 // 오늘/지난 상세 노트 공통 data 타입
 export interface NoteData {
   accessible: boolean;
-  note?: NoteDetail;
-  preview?: NotePreview;
+  note?: NoteDetail | null;
+  preview?: NotePreview | null;
 }
 
 

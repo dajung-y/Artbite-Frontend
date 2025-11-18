@@ -1,27 +1,30 @@
 // src/components/today/FullContent.tsx
 // 구독자 전용 콘텐츠
 
-import type { TodayNoteDetail } from "../../types/todayNote";
 import Button from "../common/Button";
 import ContentSection from "./ContentSection";
 import CoverSection from "./CoverSection";
-import { FiLink2 } from "react-icons/fi";
+
+import { ReactComponent as LinkIcon } from "@/assets/icons/icon-link.svg";
+import { ReactComponent as QuestionIcon } from "@/assets/icons/icon-question.svg";
 
 // snslink icons
-import { RiTwitterXFill } from "react-icons/ri";
-import { FiInstagram } from "react-icons/fi";
-import { AiFillYoutube } from "react-icons/ai";
-import { RiBehanceFill } from "react-icons/ri";
-import { RiLinkedinBoxFill } from "react-icons/ri";
+import { ReactComponent as YoutubeIcon } from "@/assets/icons/icon-youtube.svg";
+import { ReactComponent as XIcon } from "@/assets/icons/icon-x.svg";
+import { ReactComponent as LinkedinIcon } from "@/assets/icons/icon-linkedin.svg";
+import { ReactComponent as InstagramIcon } from "@/assets/icons/icon-instagram.svg";
+import { ReactComponent as BehanceIcon } from "@/assets/icons/icon-behance.svg";
+import { ReactComponent as NewsIcon } from "@/assets/icons/icon-news.svg";
+
 import MemoForm from "./MemoForm";
+import type { NoteDetail } from "../../types/note";
 
 interface FullContentProps {
-  data: TodayNoteDetail;
+  data: NoteDetail;
 }
 
 export default function FullContent({ data } : FullContentProps) {
 
-  const note = data.note;
 
   const {
     instagramUrl,
@@ -30,36 +33,38 @@ export default function FullContent({ data } : FullContentProps) {
     xUrl,
     blogUrl,
     newsUrl
-  } = note.creator;
+  } = data.creator;
 
   const snsLinks = [
-    { name: "Instagram", url: instagramUrl, icon: <FiInstagram className="w-6 h-6"/>},
-    { name: "Youtube", url: youtubeUrl, icon: <AiFillYoutube className="w-6 h-6"/>},
-    { name: "Behance", url: behanceUrl, icon: <RiBehanceFill className="w-6 h-6"/>},
-    { name: "X", url: xUrl, icon: <RiTwitterXFill className="w-6 h-6"/>},
-    { name: "Blog", url: blogUrl, icon: <RiLinkedinBoxFill className="w-6 h-6"/> },
-    { name: "News", url: newsUrl, icon: <RiLinkedinBoxFill className="w-6 h-6"/>},
+    { name: "Instagram", url: instagramUrl, icon: <InstagramIcon className="w-6 h-6"/>},
+    { name: "Youtube", url: youtubeUrl, icon: <YoutubeIcon className="w-6 h-6"/>},
+    { name: "Behance", url: behanceUrl, icon: <BehanceIcon className="w-6 h-6"/>},
+    { name: "X", url: xUrl, icon: <XIcon className="w-6 h-6"/>},
+    { name: "Blog", url: blogUrl, icon: <LinkedinIcon className="w-6 h-6"/> },
+    { name: "News", url: newsUrl, icon: <NewsIcon className="w-6 h-6"/>},
   ]
 
   const availabledLinks = snsLinks.filter(link => !!link.url);
 
   // 외부링크
   const handleExternalLink = () => {
-    console.log("외부 링크로 이동");
-  }
+    if(data.externalLink?.sourceUrl) {
+      window.open(data.externalLink.sourceUrl, "_blank", "noopener,noreferrer");
+    }    
+  };
   return (
     <div className="w-full h-full">
       {/* cover : 표지 */}
-      <CoverSection cover={note.cover} />
+      <CoverSection cover={data.cover} />
 
       {/* overview : 개요 */}
       <ContentSection 
-        title={note.overview.sectionTitle}
-        bodyText={note.overview.bodyText}
-        imageUrl={note.overview.imageUrl} />
+        title={data.overview.sectionTitle}
+        bodyText={data.overview.bodyText}
+        imageUrl={data.overview.imageUrl} />
 
       {/* processes : 본문 */}
-      {note.processes.map((pro) => (
+      {data.processes.map((pro) => (
         <div key={pro.position}>
           <ContentSection
             title={pro.sectionTitle}
@@ -70,18 +75,18 @@ export default function FullContent({ data } : FullContentProps) {
 
       {/* retrospect : 마치며 */}
       <ContentSection
-        title={note.retrospect.sectionTitle}
-        bodyText={note.retrospect.bodyText} />
+        title={data.retrospect.sectionTitle}
+        bodyText={data.retrospect.bodyText} />
 
-      {/* devider : 링크?, 구분선 */}
+      {/* devider : 링크, 구분선 */}
       <section>
         {/* 외부링크 */}
-        {note.externalLink?.sourceUrl && (
+        {data.externalLink?.sourceUrl && (
           <div className="px-5 flex justify-center">
             <Button
               variant="tertiary"
               size="sm"
-              icon={<FiLink2 className="w-full h-full" />}
+              icon={<LinkIcon className="w-6 h-6" />}
               iconSize="md"
               onClick={handleExternalLink}
             >
@@ -90,7 +95,6 @@ export default function FullContent({ data } : FullContentProps) {
           </div>
         )}
         <div className="mt-8 pb-8 border-t-8 border-greyscale-700">
-
         </div>
       </section>
 
@@ -99,13 +103,15 @@ export default function FullContent({ data } : FullContentProps) {
         {/* 질문 */}
         <div className="p-4 bg-green-800 rounded-xl outline outline-1 outline-offset-[-1px] outline-green-700 inline-flex flex-col justify-start items-start gap-2">
           <div className="text-green-400">
-            {/* 아이콘 */}
-            <h4 className="text-title4">작가의 질문</h4>
+            <div className="flex gap-1">
+              <QuestionIcon className="w-6 h-6"/>
+              <h4 className="text-title4">작가의 질문</h4>
+            </div>
           </div>
-          <p className="self-stretch text-body1 text-greyscale-200">{note.question.questionText}</p>
+          <p className="self-stretch text-body1 text-greyscale-200">{data.question.questionText}</p>
         </div>
         {/* 메모 컴포넌트 */}
-        <MemoForm initialMemo={note.answer?.answerText || ""}/>
+        <MemoForm initialMemo={data.answer?.answerText || ""}/>
 
       </section>
       
@@ -115,16 +121,16 @@ export default function FullContent({ data } : FullContentProps) {
         <div className="flex flex-col justify-center items-center">
           <div className="pb-3">
             <img  
-              src={note.creator.profileImageUrl}
-              alt={`${note.creator.name} 이미지`}
+              src={data.creator.profileImageUrl}
+              alt={`${data.creator.name} 이미지`}
               className="w-14 h-14 rounded-full object-cover" />
           </div>
             <p className="text-body-1 text-greyscale-100 gap-1 pb-1.5">
-              <span>{note.creator.name}</span>
+              <span>{data.creator.name}</span>
               <span> · </span>
-              {/* <span>{note.creator.jobTitle}</span> */}
+              <span>{data.creator.jobTitle}</span>
             </p>
-            <p className="text-caption text-greyscale-400">{note.creator.bio}</p>
+            <p className="text-caption text-greyscale-400 text-center">{data.creator.bio}</p>
         </div>
         
         {/* snsLink */}

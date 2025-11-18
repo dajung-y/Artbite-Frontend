@@ -3,9 +3,18 @@ export interface APIError {
   message: string;
 }
 
-export interface APIResponse<T> {
-  success: boolean;
-  data: T | null;
-  error: APIError | null;
+export interface APISuccess<T>{
+  success: true;
+  data: T;
+  error: null;
   timestamp: string;
 }
+
+export interface APIFailure{
+  success: false;
+  data?: null;
+  error: APIError;
+  timestamp: string;
+}
+
+export type APIResponse<T> = APISuccess<T> | APIFailure;

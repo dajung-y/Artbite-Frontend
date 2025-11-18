@@ -8,6 +8,8 @@ import { signupSchema } from "../../../schemas/signupSchema";
 import { toast } from "react-hot-toast"
 import Header from "../../../components/common/Header";
 import Toast from "../../../components/common/Toast";
+import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-text.svg"
+
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -60,10 +62,11 @@ export default function SignupPage() {
   return (
     <div className="relative w-full h-full bg-greyscale-900 flex flex-col items-center">
       <Header />
+
       {/* 로고영역 */}
-      <div className="flex-1">
-        {/* 임시 텍스트 (이미지로 대체) */}
-        <h1 className="text-title1 text-greyscale-100">sparki</h1>
+      <div className="flex-1 flex flex-col justify-center items-center">
+        <h3 className="text-title3 text-greyscale-100">생각이 튀는 순간</h3>
+        <LogoIcon className="w-full" />
       </div>
 
       {/* 회원가입 컨테이너 */}
