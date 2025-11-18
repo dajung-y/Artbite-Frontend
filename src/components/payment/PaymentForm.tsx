@@ -52,7 +52,7 @@ export default function PaymentForm() {
         amount: MEMBER_FEE,
         orderName: '스파키 멤버십',
         membershipPlanType: PLAN_CODE,
-        yourSuccessUrl: 'http://localhost:5173/payment',
+        yourSuccessUrl: 'http://localhost:5173/payment/success',
         yourFailUrl: 'http://localhost:5173/payment',
       };
 
