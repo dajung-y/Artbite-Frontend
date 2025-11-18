@@ -1,7 +1,6 @@
 // src/components/today/CoverSection.tsx
 // 오늘의 노트 페이지 표지
 
-
 import type { Cover } from "../../types/note";
 import { formatDate } from "../../utils/formatDate";
 

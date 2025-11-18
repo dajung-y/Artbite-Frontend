@@ -9,6 +9,7 @@ import Header from "../../components/common/Header";
 import type { NoteData } from "../../types/note";
 import { mockNoteApi } from "../../api/mockNoteApi";
 
+
 export default function TodayPage() {
 
   const { id } = useParams();

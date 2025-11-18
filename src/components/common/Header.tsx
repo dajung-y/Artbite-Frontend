@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import type React from "react";
 
-
 import { ReactComponent as MemuIcon } from "@/assets/icons/icon-menu.svg";
 import { ReactComponent as BookmarkIcon } from "@/assets/icons/icon-bookmark.svg";
 import { ReactComponent as ShareIcon } from "@/assets/icons/icon-share.svg";
@@ -60,11 +59,9 @@ const Header: React.FC<HeaderProps> = () => {
               onClick={handleBookmark} />
           </>
         )}
-
         <MemuIcon
           className="w-6 h-6"
           onClick={openSidebar} />
-
       </div>
     </header>
   );

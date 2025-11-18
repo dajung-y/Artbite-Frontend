@@ -10,6 +10,7 @@ import Header from "../../../components/common/Header";
 import Toast from "../../../components/common/Toast";
 import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-text.svg"
 
+
 export default function SignupPage() {
   const navigate = useNavigate();
   const { accessToken } = useAuthStore();

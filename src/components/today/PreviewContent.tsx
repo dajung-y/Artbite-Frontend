@@ -25,7 +25,6 @@ export default function PreviewContent( { data } : PreviewContentProps) {
           title={data.overview.sectionTitle}
           bodyText={data.overview.bodyText}
           imageUrl={data.overview.imageUrl} />
-        
         <div className="pb-48" />
 
         {/* join banner : 구독유도 배너 */}
