@@ -23,6 +23,10 @@ export default function HistoryPage() {
     return () => clearTimeout(timer);
   },[]);
 
+  if(loading){
+    <div>로딩중</div>
+  }
+
   return (
     <div className="w-full h-full flex flex-col">
       <Header />
