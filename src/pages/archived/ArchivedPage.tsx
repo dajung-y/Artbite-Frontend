@@ -37,7 +37,7 @@ export default function ArchivedPage() {
   return (
     <div className="w-full h-full flex flex-col">
       <Header />
-      <h3 className="px-5 py-6 text-lg text-title3 text-greyscale-100">전체 작업노트</h3>
+      <h3 className="px-5 py-6 text-title3 text-greyscale-100">전체 작업노트</h3>
 
       {/* 검색창 */}
       <Searchbar

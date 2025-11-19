@@ -20,7 +20,7 @@ export default function BookmarkPage() {
       setLoading(true);
 
       try{
-        const res = await BookmarkApi.getBookmarkList();
+        const res = await BookmarkApi.getBookmarkList(keyword);
         setData(res.data);
       } catch(err: any){
         console.error("데이터를 불러오지 못했습니다",err);
@@ -30,13 +30,17 @@ export default function BookmarkPage() {
       }
     };
     fetchData();
-  },[]);
+  },[keyword]);
 
 
   return (
     <div className="w-full h-screen flex flex-col">
       <Header />
       <h3 className="px-5 py-6 text-title3 text-greyscale-100">북마크</h3>
+
+      <Searchbar
+        value={keyword} 
+        onChange={(value: string) => setkeyword(value)} />
 
       {loading ? (
         // 로딩상태
@@ -49,8 +53,7 @@ export default function BookmarkPage() {
 
         {data && data.length > 0 ? (
           <div className='flex flex-col space-y-6 w-full'>
-            <Searchbar
-              value={keyword} onChange={(value: string) => setkeyword(value)} />
+
             <BookmarkList bookmarks={data} />
           </div>
         ) : (

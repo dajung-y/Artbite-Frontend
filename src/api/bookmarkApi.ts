@@ -2,9 +2,9 @@ import type { BookmarkListItemResponse, BookmarkToggleResponse } from "../types/
 import axiosInstance from "./axiosInstance";
 
 export const BookmarkApi = {
-  getBookmarkList: async (): Promise<BookmarkListItemResponse> => {
+  getBookmarkList: async (keyword?: string): Promise<BookmarkListItemResponse> => {
     const res = await axiosInstance.get<BookmarkListItemResponse>(
-      '/api/notes/bookmarks'
+      '/api/notes/bookmarks', { params: { keyword }}
     );
     return res.data;
   },
