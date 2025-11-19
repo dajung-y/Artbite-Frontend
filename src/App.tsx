@@ -8,7 +8,7 @@ import OAuth2RedirectPage from "./pages/auth/OAuth2RedirectPage"
 import TodayPage from "./pages/today/TodayPage"
 import MembershipPage from "./pages/membership/MembershipPage"
 import { Toaster } from "react-hot-toast"
-import HistoryPage from "./pages/history/HistoryPage"
+import ArchivedPage from "./pages/archived/ArchivedPage"
 import BookmarkPage from "./pages/bookmark/BookmarkPage"
 import OnboardingPage from "./pages/onboard/OnboardingPage"
 import PaymentPage from "./pages/payment/PaymentPage"
@@ -51,7 +51,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/today" element={<TodayPage />} />
           <Route path="/today/:id" element={<TodayPage />} /> 
-          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/archived" element={<ArchivedPage />} />
           <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/payment" element={<PaymentPage />} />

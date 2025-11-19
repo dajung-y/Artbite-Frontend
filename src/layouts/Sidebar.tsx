@@ -13,7 +13,7 @@ import { ReactComponent as CloseIcon } from "@/assets/icons/icon-close-white.svg
 const menuItems = [
   { label: '홈', to: '/'},
   { label: '오늘의 작업노트', to: '/today' },
-  { label: '지난 작업노트', to: '/history' },
+  { label: '지난 작업노트', to: '/archived' },
   { label: '북마크', to: '/bookmark' },
   { label: '멤버십', to: '/membership' },
 ]

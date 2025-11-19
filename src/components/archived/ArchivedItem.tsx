@@ -1,12 +1,14 @@
+// src/components/archived/ArchivedItem.tsx
+
 import { useNavigate } from "react-router-dom";
-import type { HistoryItems } from "../../types/archived"
+import type { ArchivedCotent } from "../../types/archived"
 import { formatDate } from "../../utils/formatDate";
 
-interface HistoryItemProps {
-  data: HistoryItems;
+interface ArchivedItemProps {
+  data: ArchivedCotent;
 }
 
-export default function HistoryItem({data}: HistoryItemProps) {
+export default function ArchivedItem({data}: ArchivedItemProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -27,10 +29,11 @@ export default function HistoryItem({data}: HistoryItemProps) {
           />
         </div>
         {/* 컨텐츠 */}
-        <div className="flex flex-col justify-between text-white">
-          <h4 className="text-base font-medium text-white line-clamp-2">{data.title}</h4>
-          <div className="flex gap-1">
-            <span>{formatDate(data.publishedAt)}</span>
+        <div className="flex flex-col justify-between">
+          <h4 className="text-title4 text-greyscale-100 line-clamp-2">{data.title}</h4>
+          <div className="flex gap-1 text-caption text-greyscale-300">
+            <span>{formatDate(data.publishedDate)}</span>
+            <span>·</span>
             <span>{data.creatorName}</span>
           </div>
         </div>
