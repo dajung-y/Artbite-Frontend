@@ -81,7 +81,8 @@ export default function TodayPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <Header />
+      <Header 
+        noteId={data.accessible? data.note?.id : data.preview?.id }/>
       
       { data.accessible && data.note ? (
         <FullContent data={data.note} />
