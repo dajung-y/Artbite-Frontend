@@ -31,6 +31,7 @@ export interface Process {
 }
 
 export interface Question {
+  questionId: number,
   questionText: string;
 }
 

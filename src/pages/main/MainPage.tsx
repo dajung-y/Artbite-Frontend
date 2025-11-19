@@ -29,7 +29,7 @@ export default function MainPage() {
       try{
         // 이후에 noteApi로 변경
         const res = await mockNoteApi.getTodayCover();
-        setData(res);
+        setData(res ?? null);
       } catch(err){
         console.error(err);
         setError("데이터를 불러오지 못했습니다");

@@ -1,6 +1,5 @@
 import FullContent from "../../components/today/FullContent";
 import PreviewContent from "../../components/today/PreviewContent";
-import { useSubscriptionStore } from "../../stores/subscriptionStore"
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import { mockNoteApi } from "../../api/mockNoteApi";
 export default function TodayPage() {
 
   const { id } = useParams();
-  const { isSubscribed } = useSubscriptionStore();
 
   const [data, setData] = useState<NoteData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,7 +53,7 @@ export default function TodayPage() {
     };
 
     fetchData();
-  }, [id,isSubscribed]);
+  }, [id]);
 
   if(loading) {
     return (

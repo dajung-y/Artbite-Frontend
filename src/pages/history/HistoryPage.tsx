@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react"
 import mockHistory from '../../mocks/mockHistory.json';
-import type { HistoryResponse } from "../../types/history";
+import type { HistoryResponse } from "../../types/archived";
 import HistoryList from "../../components/history/HistoryList";
 import Searchbar from "../../components/common/Searchbar";
 import Header from "../../components/common/Header";
@@ -22,6 +22,10 @@ export default function HistoryPage() {
     }, 1500);
     return () => clearTimeout(timer);
   },[]);
+
+  if(loading){
+    <div>로딩중</div>
+  }
 
   return (
     <div className="w-full h-full flex flex-col">

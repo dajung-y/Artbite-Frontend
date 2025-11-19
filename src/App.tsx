@@ -12,6 +12,7 @@ import HistoryPage from "./pages/history/HistoryPage"
 import BookmarkPage from "./pages/bookmark/BookmarkPage"
 import OnboardingPage from "./pages/onboard/OnboardingPage"
 import PaymentPage from "./pages/payment/PaymentPage"
+import PaymentSuccess from "./pages/payment/PaymentSuccess"
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
 
           {/* 서브 페이지들 */}
           <Route path="/login" element={<LoginPage />} />
