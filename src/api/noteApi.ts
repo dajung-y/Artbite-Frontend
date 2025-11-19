@@ -41,7 +41,7 @@ export const noteApi = {
 
   // 지난노트 상세/프리뷰
   async getArchivedNote(
-    noteId: string
+    noteId: number
   ): Promise<ArchivedNoteViewResponse["data"]> {
     const res = await axiosInstance.get<ArchivedNoteViewResponse>(
       `/api/notes/archived/${noteId}`

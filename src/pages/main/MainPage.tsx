@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import Header from "../../components/common/Header";
 import clsx from "clsx";
 import useAuthStore from "../../stores/authStore";
-import { mockNoteApi } from "../../api/mockNoteApi";
 import type { Cover } from "../../types/note";
+import { noteApi } from "../../api/noteApi";
 
 export default function MainPage() {
 
@@ -27,8 +27,7 @@ export default function MainPage() {
       setLoading(true);
       setError(null);
       try{
-        // 이후에 noteApi로 변경
-        const res = await mockNoteApi.getTodayCover();
+        const res = await noteApi.getTodayCover();
         setData(res ?? null);
       } catch(err){
         console.error(err);
