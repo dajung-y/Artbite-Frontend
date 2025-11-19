@@ -2,16 +2,23 @@ import { useEffect, useState } from "react";
 import Button from "../common/Button";
 
 import { useNavigate } from "react-router-dom";
-import { mockMembershipApi } from "../../api/mockMembershipApi";
+import { membershipApi } from "../../api/membershipApi";
+import useAuthStore from "../../stores/authStore";
 
 export default function Unsubscribed() {
   const navigate = useNavigate();
+
+  const { accessToken } = useAuthStore();
 
   const [data,setData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleClick = () => {
-    navigate("/payment");
+    if(!accessToken){
+      navigate('/login');
+    } else {
+      navigate("/payment");
+    }
   }
 
   // api 호출
@@ -19,7 +26,7 @@ export default function Unsubscribed() {
     setError(null);
     const fetchData = async () => {
       try{
-        const res = await mockMembershipApi.getMembershipImage();
+        const res = await membershipApi.getMembershipImage();
 
         if(!res.success || !res.data){
           throw new Error(res.error?.message || "이미지를 불러오지 못했습니다");
@@ -52,7 +59,7 @@ export default function Unsubscribed() {
         )}
       </div>
       {/* 버튼 */}
-      <div className="fixed left-0 bottom-0 w-full">
+      <div className="sticky left-0 bottom-0 w-full">
         <div className="h-10 w-full bg-gradient-to-t from-greyscale-900 to-transparent" />
         <div className="px-5 pb-12 bg-greyscale-900">
           <Button fullWidth onClick={handleClick}>

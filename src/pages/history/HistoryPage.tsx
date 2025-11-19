@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react"
 import mockHistory from '../../mocks/mockHistory.json';
-import type { HistoryResponse } from "../../types/history";
+import type { HistoryResponse } from "../../types/archived";
 import HistoryList from "../../components/history/HistoryList";
 import Searchbar from "../../components/common/Searchbar";
 import Header from "../../components/common/Header";

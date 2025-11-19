@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { HistoryItems } from "../../types/history"
+import type { HistoryItems } from "../../types/archived"
 import { formatDate } from "../../utils/formatDate";
 
 interface HistoryItemProps {

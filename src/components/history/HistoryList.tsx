@@ -1,4 +1,4 @@
-import type { HistoryItems } from "../../types/history"
+import type { HistoryItems } from "../../types/archived"
 import HistoryItem from "./HistoryItem";
 
 interface HistoryListProps {
