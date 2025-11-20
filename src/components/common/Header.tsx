@@ -15,6 +15,7 @@ import { showToast } from "../../utils/toast";
 import { useCallback } from "react";
 import { debounce } from "lodash"
 
+
 interface HeaderProps {
   className?: string;
   noteId?: number;
@@ -43,7 +44,6 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
       if(res.data?.bookmarked === true){
         showToast('북마크에 저장했어요')
       }
-      
     } catch(err: any){
       console.error("북마크 토글 실패", err);
     }

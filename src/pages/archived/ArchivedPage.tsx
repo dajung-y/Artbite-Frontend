@@ -9,6 +9,7 @@ import { ArchivedApi } from "../../api/archivedApi";
 import Loading from "../../components/common/Loading";
 import useDebounce from "../../hooks/useDebounce";
 
+
 export default function ArchivedPage() {
 
   const [data, setData] = useState<ArchivedNoteSummaryResponse["data"] | null>(null);
@@ -16,6 +17,7 @@ export default function ArchivedPage() {
   const [keyword, setKeyword] = useState<string>("");
   // 디바운스 적용되는 키워드 state 하나 더 선언
   const debouncedKeyword = useDebounce(keyword, 400);
+
 
   // api 호출
   useEffect(() => {
@@ -36,7 +38,6 @@ export default function ArchivedPage() {
     };
     fetchData();
   },[debouncedKeyword]);
-
 
   return (
     <div className="w-full h-full flex flex-col">

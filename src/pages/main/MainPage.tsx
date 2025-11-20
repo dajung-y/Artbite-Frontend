@@ -1,6 +1,6 @@
 // src/pages/main/MainPage.tsx
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import { useEffect, useRef, useState } from "react";
 import Header from "../../components/common/Header";
@@ -15,7 +15,6 @@ import RemindBanner from "../../components/main/RemindBanner";
 export default function MainPage() {
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   // cover
   const [data, setData] = useState<Cover | null>(null);

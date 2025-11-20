@@ -30,6 +30,7 @@ export default function ArchivedItem({data}: ArchivedItemProps) {
         </div>
         {/* 컨텐츠 */}
         <div className="flex flex-col justify-center gap-2">
+
           <h4 className="text-title4 text-greyscale-100 line-clamp-2">{data.title}</h4>
           <div className="flex gap-1 text-caption text-greyscale-300">
             <span>{formatDate(data.publishedDate)}</span>

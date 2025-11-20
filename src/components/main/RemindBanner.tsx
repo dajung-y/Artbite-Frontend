@@ -81,5 +81,6 @@ export default function RemindBanner({ data }: RemindBannerProps) {
           onConfirm={handleDismissBanner} />
       )}
     </>
+
   )
 }

@@ -20,7 +20,6 @@ export default function BookmarkPage() {
 
   const debouncedKeyword = useDebounce(keyword, 400);
 
-
   // 전체 북마크 조회
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +77,6 @@ export default function BookmarkPage() {
         <Loading />
       ) : (
         <>
-
         {/* 원본 데이터 없음 */}
         {data && data.length === 0 ? (
           <BookmarkEmpty />
