@@ -67,7 +67,7 @@ function App() {
 
       {/* 전역 토스트 */}
       <Toaster
-        position="top-center"
+        position="bottom-center"
         reverseOrder={false}
         toastOptions={{
           duration: 2000,

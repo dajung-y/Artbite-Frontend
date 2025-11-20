@@ -11,6 +11,9 @@ import { ReactComponent as LogoIcon } from "@/assets/resources/resource-logo-ico
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
 import { BookmarkApi } from "../../api/bookmarkApi";
+import { showToast } from "../../utils/toast";
+import { useCallback } from "react";
+import { debounce } from "lodash"
 
 interface HeaderProps {
   className?: string;
@@ -36,10 +39,21 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
 
     try{
       const res = await BookmarkApi.postBookmarkToggle(noteId);
+      
+      if(res.data?.bookmarked === true){
+        showToast('북마크에 저장했어요')
+      }
+      
     } catch(err: any){
       console.error("북마크 토글 실패", err);
     }
   };
+
+  // 북마크 디바운스
+  const debouncedHandleBookmark = useCallback(
+    debounce(handleBookmark, 400, {leading: true, trailing: false}),
+    [noteId]
+  );
 
   return (
     <header 
@@ -64,7 +78,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
               onClick={handleShare} />
             <BookmarkIcon
               className="w-6 h-6 text-primary fill-current"
-              onClick={handleBookmark} />
+              onClick={debouncedHandleBookmark} />
           </>
         )}
         <MemuIcon

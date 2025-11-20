@@ -5,9 +5,9 @@ import Button from "../../../components/common/Button";
 import * as axios from "axios";
 import useAuthStore from "../../../stores/authStore";
 import { signupSchema } from "../../../schemas/signupSchema";
-import { toast } from "react-hot-toast"
+// import { toast } from "react-hot-toast"
 import Header from "../../../components/common/Header";
-import Toast from "../../../components/common/Toast";
+// import Toast from "../../../components/common/CustomToast";
 import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-text.svg"
 
 
@@ -40,13 +40,13 @@ export default function SignupPage() {
     try {
       await axiosInstance.post('/api/auth/signup', { email, password, username });
 
-      toast.custom(
-        <Toast message="회원가입이 완료되었습니다" />
-      )
+      // toast.custom(
+      //   <Toast message="회원가입이 완료되었습니다" />
+      // )
 
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      },2000);
+      // setTimeout(() => {
+      //   navigate('/login', { replace: true });
+      // },2000);
       
     } catch (err: unknown) {
       console.error("회원가입 실패:", err);
