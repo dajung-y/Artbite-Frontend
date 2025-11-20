@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
 
   const openSidebar = useSidebarStore((state) => state.openSidebar);
 
-  const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/today/');
+  const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/note/');
 
   // 공유 버튼
   const handleShare = () => {

@@ -21,7 +21,7 @@ export default function BookmarkCard({ data } : BookmarkCardProps) {
       className="w-full h-full flex flex-col rounded-lg overflow-hidden"
       onClick={handleClick}>
       {/* 썸네일 */}
-      <div className="w-full aspect-square overflow-hidden">
+      <div className="w-full aspect-square overflow-hidden bg-greyscale-500">
         <img
           src={data.mainImageUrl}
           alt={data.title}
