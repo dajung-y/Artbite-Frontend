@@ -10,6 +10,10 @@ export interface Cover {
   creatorName: string;
   creatorJobTitle: string;
   publishedDate: string;
+  category?: {
+    type: string;
+    label: string;
+  }
 }
 
 export interface Overview {
@@ -31,7 +35,7 @@ export interface Process {
 }
 
 export interface Question {
-  questionId: number,
+  id: number,
   questionText: string;
 }
 

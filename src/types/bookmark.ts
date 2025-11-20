@@ -1,14 +1,12 @@
-export interface BookmarkItem {
-  id?: number;
+import type { APIResponse } from "./common";
+
+export interface BookmarkData {
+  noteId: number;
   title: string;
   mainImageUrl: string;
   creatorName: string;
-  creatorJobTitle: string;
+  tagText: string;
 }
 
-export interface BookmarkResponse {
-  success: boolean;
-  data: BookmarkItem[];
-  error: string | null;
-  timestamp: string;
-}
+export type BookmarkListItemResponse = APIResponse<BookmarkData[]>;
+export type BookmarkToggleResponse = APIResponse<Record<string, boolean>>;

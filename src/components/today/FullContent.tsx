@@ -111,7 +111,7 @@ export default function FullContent({ data } : FullContentProps) {
         </div>
         {/* 메모 컴포넌트 */}
         <MemoForm 
-          questionId={data.question.questionId}
+          questionId={data.question.id}
           initialMemo={data.answer?.answerText || ""} />
 
       </section>

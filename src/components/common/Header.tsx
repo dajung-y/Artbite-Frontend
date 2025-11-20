@@ -10,18 +10,20 @@ import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-icon.sv
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
+import { BookmarkApi } from "../../api/bookmarkApi";
 
 interface HeaderProps {
   className?: string;
+  noteId?: number;
 }
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<HeaderProps> = ( {noteId} ) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const openSidebar = useSidebarStore((state) => state.openSidebar);
 
-  const showMoreIcons = location.pathname === '/today';
+  const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/today/');
 
   // 공유 버튼
   const handleShare = () => {
@@ -29,8 +31,14 @@ const Header: React.FC<HeaderProps> = () => {
   };
 
   // 북마크 버튼
-  const handleBookmark = () => {
-    console.log("북마크 버튼 클릭");
+  const handleBookmark = async () => {
+    if(!noteId) return;
+
+    try{
+      const res = await BookmarkApi.postBookmarkToggle(noteId);
+    } catch(err: any){
+      console.error("북마크 토글 실패", err);
+    }
   };
 
   return (
@@ -55,7 +63,7 @@ const Header: React.FC<HeaderProps> = () => {
               className="w-6 h-6" 
               onClick={handleShare} />
             <BookmarkIcon
-              className="w-6 h-6"
+              className="w-6 h-6 text-primary fill-current"
               onClick={handleBookmark} />
           </>
         )}

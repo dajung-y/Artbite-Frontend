@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import Header from "../../components/common/Header";
 import type { NoteData } from "../../types/note";
-import { mockNoteApi } from "../../api/mockNoteApi";
+import { noteApi } from "../../api/noteApi";
 
 
 export default function TodayPage() {
@@ -29,14 +29,14 @@ export default function TodayPage() {
         let response: NoteData;
 
         if(!id){
-          const todayData = await mockNoteApi.getTodayDetail();
+          const todayData = await noteApi.getTodayDetail();
           if(todayData?.accessible){
             response = { accessible: true, note: todayData.note};
           } else {
             response = {accessible: false, preview: todayData?.preview ?? null}
           }
         } else {
-          const archivedData = await mockNoteApi.getArchivedNote(Number(id));
+          const archivedData = await noteApi.getArchivedNote(Number(id));
           if(archivedData?.accessible) {
             response = { accessible: true, note: archivedData.note};
           } else {
@@ -81,7 +81,8 @@ export default function TodayPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <Header />
+      <Header 
+        noteId={data.accessible? data.note?.id : data.preview?.id }/>
       
       { data.accessible && data.note ? (
         <FullContent data={data.note} />
