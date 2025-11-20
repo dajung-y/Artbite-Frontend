@@ -1,5 +1,4 @@
 // src/layouts/Sidebar.tsx
-// 사이드바 : 스타일 적용 완료
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../stores/sidebarStore";
@@ -13,7 +12,7 @@ import { ReactComponent as CloseIcon } from "@/assets/icons/icon-close-white.svg
 const menuItems = [
   { label: '홈', to: '/'},
   { label: '오늘의 작업노트', to: '/today' },
-  { label: '지난 작업노트', to: '/archived' },
+  { label: '전체 작업노트', to: '/archived' },
   { label: '북마크', to: '/bookmark' },
   { label: '멤버십', to: '/membership' },
 ]
@@ -57,7 +56,7 @@ export default function Sidebar() {
     // 사이드바 전체 영역
     <aside 
       className="
-        fixed top-0 right-0 bg-greyscale-900 text-greyscale-100 z-50 
+        fixed top-0 right-0 bg-greyscale-900 text-greyscale-100 z-[1000]
         w-3/5 max-w-[400px] h-screen
         flex flex-col justify-between"
       >
@@ -65,11 +64,13 @@ export default function Sidebar() {
       {/* 상단 : 닫기 + 메뉴 */}
       <div className="flex flex-col gap-2">
         {/* 닫기버튼 */}
-        <div className="flex justify-end px-4 pt-8 pb-4">
+        <div className="flex justify-end px-4 pt-6 pb-4">
           <CloseIcon
             className="w-6 h-6"
             onClick={closeSidebar} />
         </div>
+        {/* 계정정보 추가 */}
+
         {/* 메뉴 */}
         <nav className="flex flex-col">
           {menuItems.map((i) => {
@@ -90,7 +91,7 @@ export default function Sidebar() {
           })}
         </nav>
       </div>
-      {/* 하단버튼 */}
+      {/* 하단버튼 : 비로그인 상태일 때 로그인 버튼 제거 예정 */}
       <div className="p-6 flex items-center justify-between">
         <button
           onClick={handleAuthButton}

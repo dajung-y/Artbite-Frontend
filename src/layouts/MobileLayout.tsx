@@ -4,6 +4,7 @@
 import type React from "react";
 import Sidebar from "./Sidebar";
 import { useSidebarStore } from "../stores/sidebarStore";
+import Overlay from "../components/common/Overlay";
 
 interface MobileLayoutProps {
   children: React.ReactNode;
@@ -26,15 +27,9 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
           {children}
         </main>
 
-        {/* 오버레이 */}
-        {isSidebarOpen && (
-          <div
-            className="absolute inset-0 bg-black-100/50 z-40"
-            onClick={closeSidebar} />
-        )}
-
-        {/* 사이드바 */}
+        {isSidebarOpen && <Overlay onClick={closeSidebar} />}
         <Sidebar />
+
       </div>
     </div>
    );
