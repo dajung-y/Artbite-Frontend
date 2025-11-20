@@ -50,7 +50,7 @@ function App() {
           <Route path="/onboarding" element={<OnboardingPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/today" element={<TodayPage />} />
-          <Route path="/today/:id" element={<TodayPage />} /> 
+          <Route path="/note/:id" element={<TodayPage />} /> 
           <Route path="/archived" element={<ArchivedPage />} />
           <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/membership" element={<MembershipPage />} />

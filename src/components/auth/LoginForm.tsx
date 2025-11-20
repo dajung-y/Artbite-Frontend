@@ -69,14 +69,14 @@ export default function LoginForm() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+          className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 placeholder:text-body1 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
           
         <input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+          className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 placeholder:text-body1 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
         {/* 에러 메시지 */}
         {error && (
@@ -85,9 +85,10 @@ export default function LoginForm() {
           </div>
         )}
         <Button
-          variant="secondary"
+          variant="primary"
           fullWidth
           type="submit"
+          disabled={!email || !password}
           >
           로그인
         </Button>

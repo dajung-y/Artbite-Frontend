@@ -13,7 +13,7 @@ export default function BookmarkCard({ data } : BookmarkCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/today/${data.noteId}`);
+    navigate(`/note/${data.noteId}`);
   }
 
   return (
