@@ -40,7 +40,7 @@ export const mockTodayDetail: TodayPublishedResponse = {
         }
       ],
       question: {
-        questionId: 1234,
+        id: 1234,
         questionText: `"당신은 언제 마지막으로 '이것은 효율적이지 않지만, 그래서 더 가치있다'고 생각한 것이 무엇이었나요? 그런 경험들이 당신의 삶을 얼마나 풍요롭게 만들었나요?"`
       },
       creatorId: 1,

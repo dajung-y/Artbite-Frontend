@@ -58,6 +58,7 @@ export default function MainPage() {
     const fetchReminder = async () => {
       try{
         const res = await ReminderApi.getTodayReminder();
+        console.log("Reminder API response:", res);
 
         const hint = res.data?.surfaceHint ?? null;
         setSurfaceHint(hint);
@@ -72,7 +73,7 @@ export default function MainPage() {
       }
     };
     fetchReminder();
-  },[location.key]);
+  },[accessToken]);
 
   useEffect(() => {
     const updateImageHeight = () => {

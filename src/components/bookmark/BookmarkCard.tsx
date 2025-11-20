@@ -30,7 +30,7 @@ export default function BookmarkCard({ data } : BookmarkCardProps) {
 
       {/* 컨텐츠 */}
       <div className="flex flex-col bg-secondary p-4 gap-1 flex-1">
-        <h3 className="text-body1 text-greyscale-100 line-clamp-2">{data.title}</h3>
+        <h3 className="text-body2 text-greyscale-100 line-clamp-2">{data.title}</h3>
         <p className="text-caption text-greyscale-400">{data.creatorName}</p>
       </div>
     </article>
