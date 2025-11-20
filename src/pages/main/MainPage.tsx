@@ -58,7 +58,6 @@ export default function MainPage() {
     const fetchReminder = async () => {
       try{
         const res = await ReminderApi.getTodayReminder();
-        console.log("Reminder API response:", res);
 
         const hint = res.data?.surfaceHint ?? null;
         setSurfaceHint(hint);
@@ -121,9 +120,12 @@ export default function MainPage() {
       <Header />
 
       {/* 리마인드 배너 */}
-      { surfaceHint === "BANNER" && reminder?.payload && (
-        <RemindBanner data={reminder.payload} />
-      )}
+      <div className="absolute left-0 top-16">
+        { surfaceHint === "BANNER" && reminder && (
+          <RemindBanner data={reminder} />
+        )}
+      </div>
+
       { data && (
         <>
         <div 
