@@ -10,7 +10,7 @@ export interface Cover {
   creatorName: string;
   creatorJobTitle: string;
   publishedDate: string;
-  category: {
+  category?: {
     type: string;
     label: string;
   }

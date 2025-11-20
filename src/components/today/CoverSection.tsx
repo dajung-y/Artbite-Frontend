@@ -24,9 +24,11 @@ export default function CoverSection({ cover } : CoverProps) {
       {/* 창작물 정보 */}
       <div className="flex flex-col w-full px-5 pt-8 pb-10 gap-4">
         {/* 뱃지 */}
+        {cover.category && (
         <div className="bg-greyscale-700 px-3 py-1.5 rounded-full w-max">
           <span className="text-body2 text-greyscale-400">{cover.category.label}</span>
         </div>
+        )}
         <div>
           <h1 className="text-title1 text-greyscale-100 break-keep">{cover.title}</h1>
         </div>

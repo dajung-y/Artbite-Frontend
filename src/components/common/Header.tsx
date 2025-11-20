@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
               className="w-6 h-6" 
               onClick={handleShare} />
             <BookmarkIcon
-              className="w-6 h-6"
+              className="w-6 h-6 text-primary fill-current"
               onClick={handleBookmark} />
           </>
         )}

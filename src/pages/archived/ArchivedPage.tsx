@@ -12,6 +12,7 @@ export default function ArchivedPage() {
   const [data, setData] = useState<ArchivedNoteSummaryResponse["data"] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [keyword, setKeyword] = useState<string>("");
+  // 디바운스 적용되는 키워드 state 하나 더 선언
 
   // api 호출
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function ArchivedPage() {
       <Searchbar
         value={keyword}
         onChange={(value: string) => setKeyword(value)} />
+        {/* 이중 state 함께 관리 */}
 
       {/* 로딩처리 방법 고민 */}
       {loading && <p className="text-greyscale-100">데이터 불러오는 중...</p>}

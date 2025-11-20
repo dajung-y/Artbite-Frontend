@@ -1,6 +1,6 @@
 // src/pages/main/MainPage.tsx
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import { useEffect, useRef, useState } from "react";
 import Header from "../../components/common/Header";
@@ -8,22 +8,34 @@ import clsx from "clsx";
 import useAuthStore from "../../stores/authStore";
 import type { Cover } from "../../types/note";
 import { noteApi } from "../../api/noteApi";
+import { ReminderApi } from "../../api/reminderApi";
+import type { ReminderData } from "../../types/reminder";
+import RemindBanner from "../../components/main/RemindBanner";
 
 export default function MainPage() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // cover
   const [data, setData] = useState<Cover | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  // extended image
   const [extended, setExtended] = useState<boolean>(false);
 
   const { accessToken } = useAuthStore();
 
+  // image height
   const bottomRef = useRef<HTMLDivElement>(null);
   const [imageHeight, setImageHeight] = useState<number>(0);
 
-  // api 호출
+  // reminder
+  const [surfaceHint, setSurfaceHint] = useState<"DEFERRED" | "BANNER" | "NONE" | null>(null);
+  const [reminder, setReminder] = useState<ReminderData | null>(null);
+
+  // cover api 호출
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -40,6 +52,27 @@ export default function MainPage() {
     };
     fetchData();
   },[]);
+
+  // 리마인더 호출
+  useEffect(() => {
+    const fetchReminder = async () => {
+      try{
+        const res = await ReminderApi.getTodayReminder();
+
+        const hint = res.data?.surfaceHint ?? null;
+        setSurfaceHint(hint);
+
+        if(hint === "BANNER"){
+          setReminder(res.data ?? null);
+        } else {
+          setReminder(null);
+        }
+      } catch(err: any){
+        console.error("리마인더를 불러올 수 없습니다", err);
+      }
+    };
+    fetchReminder();
+  },[location.key]);
 
   useEffect(() => {
     const updateImageHeight = () => {
@@ -85,19 +118,19 @@ export default function MainPage() {
   return (
     <div className="relative w-full h-screen flex flex-col bg-greyscale-900 overflow-hidden">
       <Header />
+
+      {/* 리마인드 배너 */}
+      { surfaceHint === "BANNER" && reminder?.payload && (
+        <RemindBanner data={reminder.payload} />
+      )}
       { data && (
         <>
         <div 
-          // className={clsx(
-          // "w-full flex-1 justify-center items-center transition-all duration-300",
-          // extended ? "inset-0 -mt-16" : "px-6 py-4"
-          // )}
-
           className={clsx(
             "w-full justify-center items-center transition-all duration-300",
             extended ? "inset-0 -mt-16" : "px-6 py-4"
           )}
-          style={{ height: imageHeight }}
+          style={{ height: imageHeight + (extended ? 64 : 0 )}}
           onClick={() => setExtended(prev => !prev)}
           >
 

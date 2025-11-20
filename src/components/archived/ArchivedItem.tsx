@@ -21,7 +21,7 @@ export default function ArchivedItem({data}: ArchivedItemProps) {
          onClick={handleClick} >
       <div className="flex gap-4">
         {/* 썸네일 */}
-        <div className="w-20 h-20 rounded-md overflow-hidden">
+        <div className="w-20 h-20 aspect-square flex-shrink-0 rounded-md overflow-hidden bg-greyscale-500">
           <img  
             src={data.mainImageUrl}
             alt={data.title}
