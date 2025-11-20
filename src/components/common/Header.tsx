@@ -6,7 +6,7 @@ import type React from "react";
 import { ReactComponent as MemuIcon } from "@/assets/icons/icon-menu.svg";
 import { ReactComponent as BookmarkIcon } from "@/assets/icons/icon-bookmark.svg";
 import { ReactComponent as ShareIcon } from "@/assets/icons/icon-share.svg";
-import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-icon.svg"
+import { ReactComponent as LogoIcon } from "@/assets/resources/resource-logo-icon.svg"
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
       )}
     >
       {/* 왼쪽 : 홈 아이콘 */}
-      <div className="w-20 h-6"
+      <div className="w-22 h-6"
            onClick={() => navigate('/')}>
         <LogoIcon className="w-full h-full" />
       </div>
