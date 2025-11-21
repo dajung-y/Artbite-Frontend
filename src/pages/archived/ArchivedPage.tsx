@@ -6,6 +6,9 @@ import ArchivedList from "../../components/archived/ArchivedList";
 import Searchbar from "../../components/common/Searchbar";
 import Header from "../../components/common/Header";
 import { ArchivedApi } from "../../api/archivedApi";
+import Loading from "../../components/common/Loading";
+import useDebounce from "../../hooks/useDebounce";
+
 
 export default function ArchivedPage() {
 
@@ -13,6 +16,8 @@ export default function ArchivedPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [keyword, setKeyword] = useState<string>("");
   // 디바운스 적용되는 키워드 state 하나 더 선언
+  const debouncedKeyword = useDebounce(keyword, 400);
+
 
   // api 호출
   useEffect(() => {
@@ -21,7 +26,7 @@ export default function ArchivedPage() {
 
       try{
         const res = await ArchivedApi.getArchivedList(
-          keyword ? { keyword } : undefined
+          debouncedKeyword ? { keyword: debouncedKeyword } : undefined
         );
         setData(res.data);
       } catch(err: any){
@@ -32,8 +37,7 @@ export default function ArchivedPage() {
       }
     };
     fetchData();
-  },[keyword]);
-
+  },[debouncedKeyword]);
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -46,12 +50,13 @@ export default function ArchivedPage() {
         onChange={(value: string) => setKeyword(value)} />
         {/* 이중 state 함께 관리 */}
 
-      {/* 로딩처리 방법 고민 */}
-      {loading && <p className="text-greyscale-100">데이터 불러오는 중...</p>}
+      {loading && <Loading />}
 
       {/* 검색결과 없을 때 화면 수정하기 */}
       {!loading && data && data.content.length === 0 && (
-        <p className="text-greyscale-100">검색 결과가 없습니다</p>
+        <div className="flex-1 flex justify-center items-center text-greyscale-100">
+          검색결과가 없습니다
+        </div>
       )}
       
       {!loading && data && data.content.length > 0 && (

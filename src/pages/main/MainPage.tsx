@@ -1,6 +1,6 @@
 // src/pages/main/MainPage.tsx
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import { useEffect, useRef, useState } from "react";
 import Header from "../../components/common/Header";
@@ -15,7 +15,6 @@ import RemindBanner from "../../components/main/RemindBanner";
 export default function MainPage() {
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   // cover
   const [data, setData] = useState<Cover | null>(null);
@@ -72,7 +71,7 @@ export default function MainPage() {
       }
     };
     fetchReminder();
-  },[location.key]);
+  },[accessToken]);
 
   useEffect(() => {
     const updateImageHeight = () => {
@@ -120,9 +119,12 @@ export default function MainPage() {
       <Header />
 
       {/* 리마인드 배너 */}
-      { surfaceHint === "BANNER" && reminder?.payload && (
-        <RemindBanner data={reminder.payload} />
-      )}
+      <div className="absolute left-0 top-16">
+        { surfaceHint === "BANNER" && reminder && (
+          <RemindBanner data={reminder} />
+        )}
+      </div>
+
       { data && (
         <>
         <div 

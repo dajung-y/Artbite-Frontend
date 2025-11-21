@@ -7,7 +7,7 @@ interface ArchivedListProps {
 
 export default function ArchivedList({notes} : ArchivedListProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-12">
       {notes.map((item) => (
         <ArchivedItem key={item.id} data={item} />
       ))}

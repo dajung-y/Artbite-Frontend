@@ -5,9 +5,9 @@ import Button from "../../../components/common/Button";
 import * as axios from "axios";
 import useAuthStore from "../../../stores/authStore";
 import { signupSchema } from "../../../schemas/signupSchema";
-import { toast } from "react-hot-toast"
+// import { toast } from "react-hot-toast"
 import Header from "../../../components/common/Header";
-import Toast from "../../../components/common/Toast";
+// import Toast from "../../../components/common/CustomToast";
 import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-text.svg"
 
 
@@ -40,13 +40,13 @@ export default function SignupPage() {
     try {
       await axiosInstance.post('/api/auth/signup', { email, password, username });
 
-      toast.custom(
-        <Toast message="회원가입이 완료되었습니다" />
-      )
+      // toast.custom(
+      //   <Toast message="회원가입이 완료되었습니다" />
+      // )
 
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      },2000);
+      // setTimeout(() => {
+      //   navigate('/login', { replace: true });
+      // },2000);
       
     } catch (err: unknown) {
       console.error("회원가입 실패:", err);
@@ -77,21 +77,21 @@ export default function SignupPage() {
             placeholder="이메일"
             value={email}
             onChange={ (e) => setEmail(e.target.value)}
-            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 placeholder:text-body1 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 placeholder:text-body1 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
           <input
             type="text"
             placeholder="사용자 이름"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
+            className="w-full px-5 py-3.5 rounded-lg bg-greyscale-600 placeholder-greyscale-400 placeholder:text-body1 text-greyscale-200 text-body focus:outline focus:outline-greyscale-400" />
 
           {/* 에러 메시지 */}
           {error && (
@@ -103,6 +103,7 @@ export default function SignupPage() {
           <Button
             fullWidth
             type="submit"
+            disabled={!email || !password || !username}
             >
             회원가입
           </Button>

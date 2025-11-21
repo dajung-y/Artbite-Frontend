@@ -13,7 +13,7 @@ export default function ArchivedItem({data}: ArchivedItemProps) {
 
   const handleClick = () => {
     console.log(`해당노트의 id(${data.id})로 이동`);
-    navigate(`/today/${data.id}`);
+    navigate(`/note/${data.id}`);
   }
   return (
     <div className="px-5 py-6 bg-transparent"
@@ -29,7 +29,8 @@ export default function ArchivedItem({data}: ArchivedItemProps) {
           />
         </div>
         {/* 컨텐츠 */}
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-center gap-2">
+
           <h4 className="text-title4 text-greyscale-100 line-clamp-2">{data.title}</h4>
           <div className="flex gap-1 text-caption text-greyscale-300">
             <span>{formatDate(data.publishedDate)}</span>

@@ -6,11 +6,15 @@ import type React from "react";
 import { ReactComponent as MemuIcon } from "@/assets/icons/icon-menu.svg";
 import { ReactComponent as BookmarkIcon } from "@/assets/icons/icon-bookmark.svg";
 import { ReactComponent as ShareIcon } from "@/assets/icons/icon-share.svg";
-import { ReactComponent as LogoIcon } from "@/assets/logos/resource-logo-icon.svg"
+import { ReactComponent as LogoIcon } from "@/assets/resources/resource-logo-icon.svg"
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
 import { BookmarkApi } from "../../api/bookmarkApi";
+import { showToast } from "../../utils/toast";
+import { useCallback } from "react";
+import { debounce } from "lodash"
+
 
 interface HeaderProps {
   className?: string;
@@ -23,7 +27,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
 
   const openSidebar = useSidebarStore((state) => state.openSidebar);
 
-  const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/today/');
+  const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/note/');
 
   // 공유 버튼
   const handleShare = () => {
@@ -36,10 +40,20 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
 
     try{
       const res = await BookmarkApi.postBookmarkToggle(noteId);
+      
+      if(res.data?.bookmarked === true){
+        showToast('북마크에 저장했어요')
+      }
     } catch(err: any){
       console.error("북마크 토글 실패", err);
     }
   };
+
+  // 북마크 디바운스
+  const debouncedHandleBookmark = useCallback(
+    debounce(handleBookmark, 400, {leading: true, trailing: false}),
+    [noteId]
+  );
 
   return (
     <header 
@@ -50,7 +64,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
       )}
     >
       {/* 왼쪽 : 홈 아이콘 */}
-      <div className="w-20 h-6"
+      <div className="w-22 h-6"
            onClick={() => navigate('/')}>
         <LogoIcon className="w-full h-full" />
       </div>
@@ -64,7 +78,7 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
               onClick={handleShare} />
             <BookmarkIcon
               className="w-6 h-6 text-primary fill-current"
-              onClick={handleBookmark} />
+              onClick={debouncedHandleBookmark} />
           </>
         )}
         <MemuIcon

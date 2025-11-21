@@ -21,7 +21,7 @@ export default function Searchbar({ value, onChange }: SearchbarProps) {
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder="작업노트, 작가 이름"
-          className="w-full bg-transparent placeholder-greyscale-400 text-body text-greyscale-100 focus:outline-none"
+          className="w-full bg-transparent placeholder-greyscale-400 placeholder:text-body1 text-body text-greyscale-100 focus:outline-none"
           />
       </div>
     </div>

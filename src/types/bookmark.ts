@@ -8,5 +8,9 @@ export interface BookmarkData {
   tagText: string;
 }
 
+export interface BookmarkToggle {
+  bookmarked: boolean;
+}
+
 export type BookmarkListItemResponse = APIResponse<BookmarkData[]>;
-export type BookmarkToggleResponse = APIResponse<Record<string, boolean>>;
+export type BookmarkToggleResponse = APIResponse<BookmarkToggle>;
