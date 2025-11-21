@@ -60,6 +60,7 @@ export const mockTodayDetail: TodayPublishedResponse = {
       archivedAt: "2025-11-17",
       createdAt: "2025-11-17",
       updatedAt: "2025-11-17",
+      isBookmarked: true
     },
   },
   error: null,

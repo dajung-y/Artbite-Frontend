@@ -8,13 +8,13 @@ import ShareIcon from "@/assets/icons/icon-share.svg";
 import MemuIcon from "@/assets/icons/icon-menu.svg";
 import BookmarkIcon from "@/assets/icons/icon-bookmark.svg";
 import BookmarkFillIcon from "@/assets/icons/icon-bookmark-fill.svg";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
 import { BookmarkApi } from "../../api/bookmarkApi";
 import { showToast } from "../../utils/toast";
 import { useCallback, useState } from "react";
 import { debounce } from "lodash"
-
 
 
 interface HeaderProps {
@@ -49,6 +49,7 @@ const Header: React.FC<HeaderProps> = ( {noteId, initialBookmarked } ) => {
       setIsBookmarked(nowBookmarked);
 
       if(nowBookmarked){
+
         showToast('북마크에 저장했어요')
       }
     } catch(err: any){
@@ -72,6 +73,7 @@ const Header: React.FC<HeaderProps> = ( {noteId, initialBookmarked } ) => {
     >
       {/* 왼쪽 : 홈 아이콘 */}
       <div className="w-20 h-6 cursor-pointer"
+
            onClick={() => navigate('/')}>
         <img src={LogoIcon} className="w-full h-full" />
       </div>

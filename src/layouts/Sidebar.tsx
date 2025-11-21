@@ -8,8 +8,6 @@ import type { LogoutResponse } from "../types/auth";
 import { ReactComponent as CloseIcon } from "@/assets/icons/icon-close-white.svg";
 import  ArrowIcon from "@/assets/icons/icon-arrow.svg";
 
-
-
 const menuItems = [
   { label: '홈', to: '/'},
   { label: '오늘의 작업노트', to: '/today' },

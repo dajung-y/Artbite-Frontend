@@ -9,7 +9,6 @@ import { ArchivedApi } from "../../api/archivedApi";
 import Loading from "../../components/common/Loading";
 import useDebounce from "../../hooks/useDebounce";
 
-
 export default function ArchivedPage() {
 
   const [data, setData] = useState<ArchivedNoteSummaryResponse["data"] | null>(null);

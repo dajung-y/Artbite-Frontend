@@ -17,6 +17,7 @@ export const mockTodayPreview: NotePreviewResponse = {
       bodyText: "82년의 역사를 자랑하는 광주극장의 영화 손 간판은 시간이 멈춘 듯한 인상을 줍니다. 박태규 작가는 효율성에 밀려 사라져가는 손 간판의 명맥을 잇기 위해, 직업으로는 중단했지만 여전히 1년에 1~2개씩 손 간판을 그리고 있습니다.",
       imageUrl: "https://i.pinimg.com/736x/21/0d/bd/210dbd0e308288e8a15a783710bfa64b.jpg",
     },
+    isBookmarked: false
   },
   error: null,
   timestamp: "2025-11-17T02:50:00"

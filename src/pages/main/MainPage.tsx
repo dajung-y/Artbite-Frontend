@@ -120,6 +120,7 @@ export default function MainPage() {
       <Header />
 
       {/* 리마인드 배너 */}
+
       <div className="absolute w-full left-0 top-16">
         { surfaceHint === "BANNER" && reminder && (
           <RemindBanner data={reminder} />
