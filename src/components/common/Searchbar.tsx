@@ -12,7 +12,7 @@ export default function Searchbar({ value, onChange }: SearchbarProps) {
 
   return (
     <div className="px-5 w-full">
-      <div className="self-stretch w-full px-4 py-2 bg-greyscale-600 rounded-lg inline-flex items-center gap-1">
+      <div className="self-stretch w-full px-4 py-2 bg-greyscale-700 rounded-lg inline-flex items-center gap-1">
         {/* 검색 아이콘 */}
           <img src={SearchIcon} className="w-6 h-6" />
         {/* 검색 입력 */}
@@ -21,7 +21,7 @@ export default function Searchbar({ value, onChange }: SearchbarProps) {
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder="작업노트, 작가 이름"
-          className="w-full bg-transparent placeholder-greyscale-400 placeholder:text-body1 text-body text-greyscale-100 focus:outline-none"
+          className="w-full bg-transparent placeholder-greyscale-400 placeholder:text-body1 focus:placeholder-transparent text-body text-greyscale-100 focus:outline-none"
           />
       </div>
     </div>

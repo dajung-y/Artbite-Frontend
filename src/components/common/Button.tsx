@@ -58,7 +58,7 @@ export default function Button({
     widthStyle, 
     variantStyle,
     customStyle,
-    "disabled:bg-greyscale-700 disabled:border-greyscale-700 disabled:text-greyscale-400 disabled:opacity-100 disabled:cursor-not-allowed",
+    "disabled:bg-greyscale-700 disabled:border-greyscale-700 disabled:text-greyscale-500 disabled:opacity-100 disabled:cursor-not-allowed",
     className);
 
   return (

@@ -22,9 +22,10 @@ import Footer from "../common/Footer";
 
 interface FullContentProps {
   data: NoteDetail;
+  onMemoChanged?: (newMemo: string) => void;
 }
 
-export default function FullContent({ data } : FullContentProps) {
+export default function FullContent({ data, onMemoChanged } : FullContentProps) {
 
   const {
     instagramUrl,
@@ -113,7 +114,8 @@ export default function FullContent({ data } : FullContentProps) {
         {/* 메모 컴포넌트 */}
         <MemoForm 
           questionId={data.question.id}
-          initialMemo={data.answer?.answerText || ""} />
+          initialMemo={data.answer?.answerText || ""}
+          onMemoChanged={onMemoChanged} />
 
       </section>
       

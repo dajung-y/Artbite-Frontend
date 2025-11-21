@@ -1,3 +1,5 @@
+// src/pages/today/TodayPage.tsx
+
 import FullContent from "../../components/today/FullContent";
 import PreviewContent from "../../components/today/PreviewContent";
 
@@ -18,43 +20,59 @@ export default function TodayPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string|null>(null);
 
-
   // api 호출
-  useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    try {
+      let response: NoteData;
 
-      try {
-        let response: NoteData;
-
-        if(!id){
-          const todayData = await noteApi.getTodayDetail();
-          if(todayData?.accessible){
-            response = { accessible: true, note: todayData.note};
-          } else {
-            response = {accessible: false, preview: todayData?.preview ?? null}
-          }
+      if(!id){
+        const todayData = await noteApi.getTodayDetail();
+        if(todayData?.accessible){
+          response = { accessible: true, note: todayData.note};
         } else {
-          const archivedData = await noteApi.getArchivedNote(Number(id));
-          if(archivedData?.accessible) {
-            response = { accessible: true, note: archivedData.note};
-          } else {
-            response = {accessible: false, preview: archivedData?.preview ?? null};
-          }
+          response = {accessible: false, preview: todayData?.preview ?? null}
         }
-
-        setData(response);
-      } catch(err: any){
-        setError(err.message || "데이터를 불러오는 중 오류가 발생했습니다");
-      } finally {
-        setLoading(false);
+      } else {
+        const archivedData = await noteApi.getArchivedNote(Number(id));
+        if(archivedData?.accessible) {
+          response = { accessible: true, note: archivedData.note};
+        } else {
+          response = {accessible: false, preview: archivedData?.preview ?? null};
+        }
       }
-    };
 
+      setData(response);
+    } catch(err: any){
+      setError(err.message || "데이터를 불러오는 중 오류가 발생했습니다");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 페이지 로드용
+  useEffect(() => {
     fetchData();
   }, [id]);
+
+  // 메모 변경용
+  const handleMemoChanged = (newMemo: string) => {
+    setData(prev => {
+      if (!prev?.accessible || !prev.note) return prev;
+  
+      return {
+        ...prev,
+        note: {
+          ...prev.note,
+          answer: {
+            answerText: newMemo, // 메모 내용만 업데이트
+          }
+        }
+      };
+    });
+  };
 
   if(loading) {
     return (
@@ -87,9 +105,9 @@ export default function TodayPage() {
         }/>
       
       { data.accessible && data.note ? (
-        <FullContent data={data.note} />
+        <FullContent data={data.note} onMemoChanged={handleMemoChanged} />
       ) : data.preview ? (
-        <PreviewContent data={data.preview} />
+        <PreviewContent data={data.preview}/>
       ) : (
         <div>노트 정보가 없습니다</div>
       )}
