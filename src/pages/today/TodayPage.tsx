@@ -76,13 +76,15 @@ export default function TodayPage() {
 
   if(loading) {
     return (
-      <Loading />
+      <div className="w-full h-screen flex">
+        <Loading />
+      </div>
     )
   }
 
   if(error) {
     return(
-      <div className="text-title3 text-greyscale-100">
+      <div className="flex justify-center items-center text-title3 text-greyscale-100">
         {error}
       </div>
     )
@@ -90,7 +92,7 @@ export default function TodayPage() {
 
   if(!data) {
     return(
-      <div className="text-title3 text-greyscale-100">
+      <div className="flex justify-center items-center text-title3 text-greyscale-100">
         데이터를 찾을 수 없습니다
       </div>
     )

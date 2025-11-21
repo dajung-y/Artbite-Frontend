@@ -15,14 +15,14 @@ export default function ContentSection({
   overlay = false
 } : ContentProps) {
   return (
-    <section className="w-full h-auto flex flex-col">
+    <section className="w-full flex flex-col">
       {/* 이미지 */}
       {imageUrl && (
         <div className="w-full">
           <img
             src={imageUrl}
             alt="해당이미지"
-            className="" />
+            className="bg-greyscale-500 w-full h-auto" />
         </div>
       )}
       {/* 타이틀 + 내용 */}

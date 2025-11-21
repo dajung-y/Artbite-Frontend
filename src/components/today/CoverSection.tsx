@@ -18,7 +18,7 @@ export default function CoverSection({ cover } : CoverProps) {
         <img 
           src={cover.mainImageUrl}
           alt={cover.title}
-          className="w-full h-full object-cover" />
+          className="w-full h-full object-cover bg-greyscale-500" />
 
       </div>
       {/* 창작물 정보 */}
