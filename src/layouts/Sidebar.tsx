@@ -1,11 +1,12 @@
 // src/layouts/Sidebar.tsx
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../stores/sidebarStore";
 import useAuthStore, { clearTokenState } from "../stores/authStore";
 import axiosInstance from "../api/axiosInstance";
 import type { LogoutResponse } from "../types/auth";
 import { ReactComponent as CloseIcon } from "@/assets/icons/icon-close-white.svg";
+import  ArrowIcon from "@/assets/icons/icon-arrow.svg";
 
 
 
@@ -25,6 +26,8 @@ export default function Sidebar() {
   const closeSidebar = useSidebarStore((state) => state.closeSidebar);
   const location = useLocation();
 
+  const userName = "사용자";
+
   if(!isOpen) return null;
 
   // 메뉴 클릭
@@ -33,9 +36,7 @@ export default function Sidebar() {
   // 로그인/로그아웃 버튼
   const handleAuthButton = async () => {
     closeSidebar();
-
     // 로그아웃
-    if(accessToken) {
       try{
         await axiosInstance.post<LogoutResponse>('/api/auth/logout');
       } catch(err) {
@@ -44,10 +45,6 @@ export default function Sidebar() {
         clearTokenState();
         navigate('/login');
       }
-    } else {
-      // 로그인 페이지로 이동
-      navigate("/login");
-    }
   };
 
   // 이용약관
@@ -67,12 +64,31 @@ export default function Sidebar() {
       {/* 상단 : 닫기 + 메뉴 */}
       <div className="flex flex-col gap-2">
         {/* 닫기버튼 */}
-        <div className="flex justify-end px-4 pt-6 pb-4">
+        <div className="flex justify-end px-5 pt-6 pb-4">
           <CloseIcon
             className="w-6 h-6"
             onClick={closeSidebar} />
         </div>
         {/* 계정정보 추가 */}
+        <div 
+          className="flex px-5 py-4"
+          onClick={
+            ! accessToken
+               ? () => (
+                closeSidebar(),
+                navigate('/login') 
+              )
+               : () => (
+                closeSidebar()
+               )
+          }>
+          <div className="flex w-full gap-2 justify-between items-center">
+            <span className="flex-1 text-title4 text-greyscale-400">{accessToken ? `${userName}님, 안녕하세요` : "로그인 해주세요" }</span>
+            <span className="w-4 h-4 text-end">
+              <img src={ArrowIcon} className="w-full h-full" />
+            </span>
+          </div>
+        </div>
 
         {/* 메뉴 */}
         <nav className="flex flex-col">
@@ -93,18 +109,6 @@ export default function Sidebar() {
             };
 
             return(
-              // <Link
-              //   key={i.to}
-              //   to={i.to}
-              //   onClick={closeSidebar} 
-              //   className={`
-              //     self-stretch h-14 px-6 flex items-center
-              //     ${isActive ? "text-primary" : ""}
-              //   `}
-              // >
-              //   <span className="text-title2">{i.label}</span>
-              // </Link>
-
               <button
                 key={i.label}
                 onClick={handleMenuClick}
@@ -120,11 +124,13 @@ export default function Sidebar() {
       </div>
       {/* 하단버튼 : 비로그인 상태일 때 로그인 버튼 제거 예정 */}
       <div className="p-6 flex items-center justify-between">
-        <button
+        { accessToken && (
+          <button
           onClick={handleAuthButton}
           className="flex-1 text-center text-title4 text-greyscale-500" >
-          {accessToken ? "로그아웃" : "로그인"}
-        </button>
+            로그아웃
+          </button>
+        )}
         <button
           onClick={handleTermsButton}
           className="flex-1 text-center text-title4 text-greyscale-500" >
