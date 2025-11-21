@@ -70,7 +70,7 @@ function App() {
         position="bottom-center"
         reverseOrder={false}
         toastOptions={{
-          duration: 2000,
+          duration: 1600,
         }} />
     </>
   )

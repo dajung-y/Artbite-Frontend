@@ -5,6 +5,7 @@ import Modal from "../common/Modal";
 import { ReactComponent as AnswerIcon } from "@/assets/icons/icon-answer.svg";
 import { answerApi } from "../../api/answerApi";
 import z from "zod";
+import { showToast } from "../../utils/toast";
 
 interface MemoFormProps {
   questionId: number;
@@ -70,7 +71,7 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
 
   const handleFocus = () => setIsFocused(true);
 
-  // 메모 저장, 수정, 삭제 핸들러
+  // 메모 저장, 수정 핸들러
   const handleSaveMemo = async () => {
 
     // 수정없을 시 api 호출 안함
@@ -81,9 +82,11 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
         // 새 메모 작성 : POST
         await answerApi.postAnswer(questionId, {answerText: memoValue});
         onMemoChanged?.(memoValue);
+        showToast("답변을 저장했어요");
       } else{
         // 메모 수정 : PUT
         await answerApi.putAnswer(questionId, {answerText: memoValue});
+        showToast("수정을 완료했어요");
       }
       setIsEditing(false);
     } catch(err) {
@@ -99,10 +102,11 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
 
     try{
       await answerApi.deleteAnswer(questionId);
+      setIsModalOpen(false);
       setMemoValue("");
       setIsEditing(false);
       onMemoChanged?.("");
-      setIsModalOpen(false);
+      showToast("답변을 삭제했어요");
     } catch(err){
       console.error("메모삭제 오류", err);
     }
@@ -129,7 +133,7 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
         onFocus={handleFocus}
         readOnly={hasSavedMemo && !isEditing}
         maxLength={200}
-        className="w-full resize-none bg-transparent border-none outline-none text-greyscale-200 placeholder-greyscale-500 caret-green-400"
+        className="w-full resize-none bg-transparent border-none outline-none text-greyscale-200 placeholder-greyscale-500 focus:placeholder-transparent caret-green-400"
         rows={2}
         placeholder="질문에 대한 생각을 자유롭게 입력해주세요" />
 
@@ -148,27 +152,54 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
 
       {/* 버튼 영역 */}
       <div className="flex w-full pt-4 gap-2.5">
-        {hasSavedMemo && !isEditing ? (
-          <>
-            <Button
-              variant="custom"
-              size="sm"
-              bgColor="bg-greyscale-900"
-              borderColor="border-greyscale-900"
-              textColor="text-greyscale-100"
-              className="w-full"
-              onClick={() => setIsModalOpen(true)}>
-              삭제
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="w-full"
-              onClick={handleUpdateMemo}>
-              수정
-            </Button>
-
-            {isModalOpen && (
+        {hasSavedMemo ? (
+          isEditing ? (
+            // 기존 메모 존재, 수정중
+            <>
+              <Button
+                variant="custom"
+                size="sm"
+                bgColor="bg-greyscale-900"
+                borderColor="border-greyscale-900"
+                textColor="text-greyscale-100"
+                className="w-full"
+                onClick={() => {
+                  setIsEditing(false),
+                  setMemoValue(initialMemo)
+                }
+                }>
+                취소
+              </Button>
+              <Button
+                size="sm"
+                className="w-full"
+                disabled={memoValue.trim() === "" || memoValue === initialMemo}
+                onClick={handleSaveMemo}>
+                저장
+              </Button>
+            </>
+          ) : (
+            // 기존 메모 존재, 수정중 아님
+            <>
+              <Button
+                variant="custom"
+                size="sm"
+                bgColor="bg-greyscale-900"
+                borderColor="border-greyscale-900"
+                textColor="text-greyscale-100"
+                className="w-full"
+                onClick={() => setIsModalOpen(true)}>
+                삭제
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="w-full"
+                onClick={handleUpdateMemo}>
+                수정
+              </Button>
+              
+              {isModalOpen && (
               <Modal
               title="정말 삭제할까요?"
               subtitle="나의 답변이 사라져요"
@@ -176,16 +207,19 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
               onCancel={() => setIsModalOpen(false)}
               onConfirm={handleDeleteMemo} />
             )}
-          </>
+            </>
+          ) 
         ) : (
-          <Button
-            size="sm"
-            fullWidth
-            disabled={memoValue.trim() === "" || memoValue === initialMemo}
-            onClick={handleSaveMemo}
-            >
+          <>
+            <Button
+              size="sm"
+              fullWidth
+              disabled={memoValue.trim() === ""}
+              onClick={handleSaveMemo}
+              >
               저장
           </Button>
+          </>
         )}
       </div>
     </div>
