@@ -35,7 +35,7 @@ export default function Subscribed() {
                 play
                 animationData={SparkAnimation}
                 className="w-8 h-8" />
-              <h1 className="text-title1 text-primary">{day}일째</h1>
+              <h1 className="pt-2 text-title1 text-primary">{day}일째</h1>
             </div>
             <h3 className="text-title3 text-greyscale-100">꺼지지 않는 영감의 불꽃</h3>
           </div>

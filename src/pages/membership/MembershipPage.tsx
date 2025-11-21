@@ -4,6 +4,7 @@ import Subscribed from "../../components/membership/Subscribed";
 import Unsubscribed from "../../components/membership/Unsubscribed";
 import { useSubscriptionStore } from "../../stores/subscriptionStore"
 import useAuthStore from "../../stores/authStore";
+import Loading from "../../components/common/Loading";
 
 export default function MembershipPage() {
 
@@ -31,9 +32,7 @@ export default function MembershipPage() {
     return(
       <div className="w-full h-full flex flex-col">
         <Header />
-        <div className="flex-1 flex items-center justify-center">
-          로딩 중...
-        </div>
+        <Loading />
       </div>
     )
   }

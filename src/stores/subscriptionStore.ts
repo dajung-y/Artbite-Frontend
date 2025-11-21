@@ -7,6 +7,7 @@ import { membershipApi } from "../api/membershipApi";
 
 export interface SubscriptionState {
   status: MembershipStatus | null;
+  startDate: string | null;
   loading: boolean;
   error: string | null;
   isActiveMember: boolean;
@@ -15,6 +16,7 @@ export interface SubscriptionState {
 
 export const useSubscriptionStore = create<SubscriptionState>((set) => ({
   status: null,
+  startDate: null,
   loading: false,
   error: null,
   isActiveMember: false,
@@ -27,9 +29,9 @@ export const useSubscriptionStore = create<SubscriptionState>((set) => ({
 
       if (res.success && res.data){
         const active = res.data.status === "ACTIVE" || res.data.status === "CANCELED";
-        set({ status: res.data, isActiveMember: active, error: null })
+        set({ status: res.data, startDate: res.data.startDate, isActiveMember: active, error: null })
       } else{
-        set({ status: null, isActiveMember:false, error: null })
+        set({ status: null, startDate: null, isActiveMember:false, error: null })
       }
     } catch(err: any){
       const statusCode = err?.response?.status;

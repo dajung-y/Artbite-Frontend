@@ -15,12 +15,32 @@ interface MemoFormProps {
 export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }: MemoFormProps) {
 
   const [memoValue, setMemoValue] = useState<string>(initialMemo);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const hasSavedMemo = initialMemo.trim().length > 0;
+
+  const containerRef = useRef<HTMLHRElement | null>(null);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
 
   const memoSchema = z.string().max(200, "200자 이상 입력할 수 없어요");
 
@@ -90,6 +110,7 @@ export default function MemoForm({ questionId, initialMemo = "", onMemoChanged }
 
   return (
     <div 
+      ref={containerRef}
       className={`p-4 w-full bg-greyscale-900 rounded-xl outline-offset-[-1px] inline-flex flex-col transition-all
         ${isFocused ? "outline outline-1 outline-greyscale-400" : "outline outline-1 outline-greyscale-600"}`}>
       {/* 헤딩 */}
