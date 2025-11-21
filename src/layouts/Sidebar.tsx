@@ -27,6 +27,9 @@ export default function Sidebar() {
 
   if(!isOpen) return null;
 
+  // 메뉴 클릭
+
+
   // 로그인/로그아웃 버튼
   const handleAuthButton = async () => {
     closeSidebar();
@@ -75,18 +78,42 @@ export default function Sidebar() {
         <nav className="flex flex-col">
           {menuItems.map((i) => {
             const isActive = location.pathname === i.to;
+
+            const handleMenuClick = () => {
+              closeSidebar();
+
+              const needLoginPaths = ['/today', '/archived', '/bookmark'];
+
+              // 비로그인 사용자
+              if(!accessToken && needLoginPaths.includes(i.to)){
+                navigate('/login');
+                return;
+              }
+              navigate(i.to);
+            };
+
             return(
-              <Link
-                key={i.to}
-                to={i.to}
-                onClick={closeSidebar} 
+              // <Link
+              //   key={i.to}
+              //   to={i.to}
+              //   onClick={closeSidebar} 
+              //   className={`
+              //     self-stretch h-14 px-6 flex items-center
+              //     ${isActive ? "text-primary" : ""}
+              //   `}
+              // >
+              //   <span className="text-title2">{i.label}</span>
+              // </Link>
+
+              <button
+                key={i.label}
+                onClick={handleMenuClick}
                 className={`
                   self-stretch h-14 px-6 flex items-center
                   ${isActive ? "text-primary" : ""}
-                `}
-              >
+                `}>
                 <span className="text-title2">{i.label}</span>
-              </Link>
+              </button>
             )
           })}
         </nav>

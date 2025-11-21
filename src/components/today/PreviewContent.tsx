@@ -10,7 +10,6 @@ interface PreviewContentProps {
 export default function PreviewContent( { data } : PreviewContentProps) {
 
   const navigate = useNavigate();
-  console.log(data);
 
   if(!data) return null;
 

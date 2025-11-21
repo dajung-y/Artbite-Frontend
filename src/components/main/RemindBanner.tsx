@@ -42,7 +42,7 @@ export default function RemindBanner({ data }: RemindBannerProps) {
       <div className="w-full px-4">
         {/* 배너 박스 */}
         <div 
-          className="flex justify-between p-4 rounded-lg bg-greyscale-700/80"
+          className="flex w-full justify-between p-4 rounded-lg bg-greyscale-700/80"
           onClick={handletoNote}>
           {/* 컨텐츠 */}
           <div className="flex gap-4 items-center">
