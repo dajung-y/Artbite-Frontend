@@ -18,6 +18,7 @@ import { ReactComponent as NewsIcon } from "@/assets/icons/icon-news.svg";
 
 import MemoForm from "./MemoForm";
 import type { NoteDetail } from "../../types/note";
+import Footer from "../common/Footer";
 
 interface FullContentProps {
   data: NoteDetail;
@@ -149,6 +150,7 @@ export default function FullContent({ data } : FullContentProps) {
           ))}
         </div>
       </section>
+      <Footer />
     </div>
   )
 }
