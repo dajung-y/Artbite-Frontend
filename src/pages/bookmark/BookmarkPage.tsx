@@ -67,9 +67,12 @@ export default function BookmarkPage() {
 
       {/* 북마크 데이터 있을 때만 */}
       {data && data.length > 0 && (
-        <Searchbar
-        value={keyword} 
-        onChange={(value: string) => setkeyword(value)} />
+        <>
+          <Searchbar
+          value={keyword} 
+          onChange={(value: string) => setkeyword(value)} />
+          <div className='w-full h-4' />
+        </>
       )}
 
       {loading ? (
@@ -82,12 +85,14 @@ export default function BookmarkPage() {
           <BookmarkEmpty />
         ) : (
           <>
-          {/* filtered 결과 있음 */}
-          {filteredData && filteredData.length > 0 ? (
-            <BookmarkList bookmarks={filteredData} />
-          ) : (
-              <div className='flex-1 flex text-body1 text-greyscale-300 justify-center items-center'>해당하는 북마크가 없어요</div>
-          )}
+            {/* filtered 결과 있음 */}
+            <div className='flex-1 overflow-y-auto'>
+            {filteredData && filteredData.length > 0 ? (
+              <BookmarkList bookmarks={filteredData} />
+            ) : (
+                <div className='flex-1 flex text-body1 text-greyscale-300 justify-center items-center'>해당하는 북마크가 없어요</div>
+            )}
+          </div>
           </>
         )}
         </>

@@ -10,7 +10,7 @@ interface BookmarkListProps {
 
 export default function BookmarkList({ bookmarks } : BookmarkListProps) {
   return (
-    <div className="px-5 py-6 grid grid-cols-2 gap-4">
+    <div className="px-5 pt-4 pb-12 grid grid-cols-2 gap-4">
       {bookmarks.map((item, index) => (
         <BookmarkCard key={index} data={item} />
       ))}
