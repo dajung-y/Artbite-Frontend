@@ -5,6 +5,7 @@ import type React from "react";
 
 import { ReactComponent as MemuIcon } from "@/assets/icons/icon-menu.svg";
 import { ReactComponent as BookmarkIcon } from "@/assets/icons/icon-bookmark.svg";
+import { ReactComponent as BookmarkFillIcon } from "@/assets/icons/icon-bookmark-fill.svg";
 import { ReactComponent as ShareIcon } from "@/assets/icons/icon-share.svg";
 import { ReactComponent as LogoIcon } from "@/assets/resources/resource-logo-icon.svg"
 
@@ -12,22 +13,25 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../stores/sidebarStore";
 import { BookmarkApi } from "../../api/bookmarkApi";
 import { showToast } from "../../utils/toast";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { debounce } from "lodash"
 
 
 interface HeaderProps {
   className?: string;
   noteId?: number;
+  initialBookmarked?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ( {noteId} ) => {
+const Header: React.FC<HeaderProps> = ( {noteId, initialBookmarked } ) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const openSidebar = useSidebarStore((state) => state.openSidebar);
 
   const showMoreIcons = location.pathname === '/today' || location.pathname.startsWith('/note/');
+
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked ?? false);
 
   // 공유 버튼
   const handleShare = () => {
@@ -41,7 +45,10 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
     try{
       const res = await BookmarkApi.postBookmarkToggle(noteId);
       
-      if(res.data?.bookmarked === true){
+      const nowBookmarked = res.data?.bookmarked === true;
+      setIsBookmarked(nowBookmarked);
+
+      if(nowBookmarked){
         showToast('북마크에 저장했어요')
       }
     } catch(err: any){
@@ -76,9 +83,15 @@ const Header: React.FC<HeaderProps> = ( {noteId} ) => {
             <ShareIcon
               className="w-6 h-6" 
               onClick={handleShare} />
-            <BookmarkIcon
-              className="w-6 h-6 text-primary fill-current"
-              onClick={debouncedHandleBookmark} />
+            {isBookmarked ? (
+              <BookmarkFillIcon
+                className="w-6 h-6 text-primary fill-current"
+                onClick={debouncedHandleBookmark} />
+            ) : (
+              <BookmarkIcon
+                className="w-6 h-6 text-primary fill-current"
+                onClick={debouncedHandleBookmark} />
+            )}
           </>
         )}
         <MemuIcon

@@ -79,12 +79,14 @@ export interface NoteDetail {
   archivedAt?: string;
   createdAt?: string;
   updatedAt?: string;
+  isBookmarked: boolean;
 }
 
 export interface NotePreview {
   id: number;
   cover: Cover;
   overview: Overview;
+  isBookmarked: boolean;
 }
 
 // 오늘/지난 상세 노트 공통 data 타입

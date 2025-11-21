@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/common/Header";
 import type { NoteData } from "../../types/note";
 import { noteApi } from "../../api/noteApi";
+import Loading from "../../components/common/Loading";
 
 
 export default function TodayPage() {
@@ -57,9 +58,7 @@ export default function TodayPage() {
 
   if(loading) {
     return (
-      <div className="text-title3 text-greyscale-100">
-        데이터 불러오는 중...
-      </div>
+      <Loading />
     )
   }
 
@@ -82,7 +81,10 @@ export default function TodayPage() {
   return (
     <div className="w-full h-full flex flex-col">
       <Header 
-        noteId={data.accessible? data.note?.id : data.preview?.id }/>
+        noteId={data.accessible? data.note?.id : data.preview?.id }
+        initialBookmarked={
+          data.accessible ? data.note?.isBookmarked : data.preview?.isBookmarked
+        }/>
       
       { data.accessible && data.note ? (
         <FullContent data={data.note} />

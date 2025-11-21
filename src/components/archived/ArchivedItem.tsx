@@ -12,7 +12,6 @@ export default function ArchivedItem({data}: ArchivedItemProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log(`해당노트의 id(${data.id})로 이동`);
     navigate(`/note/${data.id}`);
   }
   return (
