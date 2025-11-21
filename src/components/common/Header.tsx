@@ -71,7 +71,7 @@ const Header: React.FC<HeaderProps> = ( {noteId, initialBookmarked } ) => {
       )}
     >
       {/* 왼쪽 : 홈 아이콘 */}
-      <div className="w-20 h-6"
+      <div className="w-20 h-6 cursor-pointer"
            onClick={() => navigate('/')}>
         <img src={LogoIcon} className="w-full h-full" />
       </div>
@@ -101,7 +101,7 @@ const Header: React.FC<HeaderProps> = ( {noteId, initialBookmarked } ) => {
           </>
         )}
         <div
-          className="w-[28px] h-[28px]"
+          className="w-[28px] h-[28px] cursor-pointer"
           onClick={openSidebar} >
           <img src={MemuIcon} className="w-full h-full" />
         </div>
