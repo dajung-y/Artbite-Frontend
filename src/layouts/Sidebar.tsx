@@ -26,17 +26,13 @@ export default function Sidebar() {
   const closeSidebar = useSidebarStore((state) => state.closeSidebar);
   const location = useLocation();
 
-  const userName = "사용자";
+  const userName = "회원";
 
   if(!isOpen) return null;
 
-  // 메뉴 클릭
-
-
-  // 로그인/로그아웃 버튼
+  // 로그아웃
   const handleAuthButton = async () => {
     closeSidebar();
-    // 로그아웃
       try{
         await axiosInstance.post<LogoutResponse>('/api/auth/logout');
       } catch(err) {
@@ -56,7 +52,7 @@ export default function Sidebar() {
     // 사이드바 전체 영역
     <aside 
       className="
-        fixed top-0 right-0 bg-greyscale-900 text-greyscale-100 z-[1000]
+        fixed top-0 right-0 bg-greyscale-700 text-greyscale-100 z-[1000]
         w-3/5 max-w-[400px] h-screen
         flex flex-col justify-between"
       >
@@ -71,7 +67,7 @@ export default function Sidebar() {
         </div>
         {/* 계정정보 추가 */}
         <div 
-          className="flex px-5 py-4"
+          className="flex px-8 py-4"
           onClick={
             ! accessToken
                ? () => (
@@ -83,8 +79,8 @@ export default function Sidebar() {
                )
           }>
           <div className="flex w-full gap-2 justify-between items-center">
-            <span className="flex-1 text-title4 text-greyscale-400">{accessToken ? `${userName}님, 안녕하세요` : "로그인 해주세요" }</span>
-            <span className="w-4 h-4 text-end">
+            <p className="text-title4 text-greyscale-400">{accessToken ? `${userName}님, 안녕하세요` : "로그인 해주세요" }</p>
+            <span className="w-4 flex items-center text-end">
               <img src={ArrowIcon} className="w-full h-full" />
             </span>
           </div>
@@ -113,10 +109,10 @@ export default function Sidebar() {
                 key={i.label}
                 onClick={handleMenuClick}
                 className={`
-                  self-stretch h-14 px-6 flex items-center
+                  self-stretch px-8 py-3.5 flex items-center
                   ${isActive ? "text-primary" : ""}
                 `}>
-                <span className="text-title2">{i.label}</span>
+                <span className="text-title3">{i.label}</span>
               </button>
             )
           })}

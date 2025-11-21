@@ -42,7 +42,7 @@ export default function Modal({
         onClick={onCancel}>
         {/* 모달 box */}
         <div 
-          className="w-[85%] px-3.5 pt-6 pb-4 bg-greyscale-700 rounded-xl inline-flex flex-col justify-center items-center gap-6"
+          className="max-w-[550px] w-[85%] px-3.5 pt-6 pb-4 bg-greyscale-700 rounded-xl inline-flex flex-col justify-center items-center gap-6"
           onClick={(e) => e.stopPropagation()}>
           {/* title */}
           <div className="self-stretch inline-flex flex-col justify-start items-center gap-3">
