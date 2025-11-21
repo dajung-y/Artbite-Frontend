@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = getAccessTokenFromState();
 
-    if(config.url !=='/api/auth/logout' && accessToken) {
+    if(accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
